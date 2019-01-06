@@ -1,0 +1,22 @@
+.bitmap {
+    width: 200px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.pixel {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+}
+
+.sourceBox,
+.inputBox {
+    font-family: monospace;
+    font-size: 18px;
+}
+
+.pointer {
+    background-color: lightgray;
+}
