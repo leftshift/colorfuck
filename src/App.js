@@ -39,13 +39,16 @@ class Machine extends Component {
 
     random() {}
     stop() {
+        clearInterval(this.interval);
         this.setState({
             ins_pointer: 0,
             running: false,
             memory: new Array(300).fill(0),
         })
     }
-    run(){}
+    run(){
+        this.interval = setInterval(() => this.step(), 10);
+    }
     step() {
         if (this.state.running == false) {
             this.setState({running: true});
@@ -106,7 +109,11 @@ class Machine extends Component {
         new_mem[mem_pointer] = this.posmod(this.state.memory[mem_pointer] + n, len);
         this.setState({memory: new_mem});
     }
-    putchar() {}
+    putchar() {
+        const mem_pointer = this.state.mem_pointer;
+        const val = this.state.memory[mem_pointer];
+        console.log(String.fromCharCode(val));
+    }
     getchar() {}
     start_loop(ins_index) {
         const ins_pointer = this.state.ins_pointer
@@ -126,6 +133,8 @@ class Machine extends Component {
             const jump_target = this.state.stack.slice(-1)[0];
             let new_stack = this.state.stack.slice(0, -1);
             this.setState({stack: new_stack, ins_pointer: jump_target});
+        } else {
+            this.ip_inc(1);
         }
     }
 
@@ -138,13 +147,13 @@ class Machine extends Component {
                 else if(v === "]") return -1;
                 else return null;
             }
-        }).reduce((acc, cur, i) => {
-            if(i<0) return i;
+        }).reduce((acc, cur, i, l) => {
+            if(acc<0) return acc;
 
-            if(acc === null && cur == null) return null;
-            else if(acc === null && i) return i;
-            else if(acc && i) return acc + i;
+            else if(acc === null && cur) return cur;
+            else if(acc && cur) return acc + cur;
             else if(acc===0) return -i;
+            else return acc;
         }, null);
 
         debugger;
