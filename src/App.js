@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Interpreter from './brainfuckInterpreter';
 
 export default class App extends Component {
     constructor(props) {
@@ -16,167 +17,60 @@ export default class App extends Component {
 class Machine extends Component { 
     constructor(props) {
         super(props);
+        this.interpreter = new Interpreter(256);
+        const machine_state = this.interpreter.state;
         this.state = {
             source: "",
-            memory: new Array(300).fill(0),
             running: false,
-            mem_pointer: 0,
-            ins_pointer: 0,
-            stack: []
+            memory: machine_state.memory,
+            ins_pointer: machine_state.ins_pointer,
+            mem_pointer: machine_state.mem_pointer
         };
+    }
+
+    updateMachineState() {
+        const machine_state = this.interpreter.state;
+        this.setState({
+            memory: machine_state.memory,
+            ins_pointer: machine_state.ins_pointer,
+            mem_pointer: machine_state.mem_pointer
+        });
     }
 
     handleChange(event) {
         this.setState({source: event.target.value});
+        this.interpreter.source = event.target.value;
     }
     
-    posmod(n, m) {
-        if (m == 0) {
-            return 0;
-        }
-        return ((n % m) + m) % m;
-    }
-
     random() {}
     stop() {
         clearInterval(this.interval);
+        this.interpreter.stop();
+        this.updateMachineState();
         this.setState({
-            ins_pointer: 0,
             running: false,
-            memory: new Array(300).fill(0),
-        })
+        });
     }
+
     run(){
-        this.interval = setInterval(() => this.step(), 10);
+        this.interval = setInterval(() => this.updateMachineState(), 100);
+        this.interpreter.run();
+        this.setState({
+            running: true,
+        });
+
     }
+
     step() {
-        if (this.state.running == false) {
-            this.setState({running: true});
-            return;
-        }
-
-        const instruction = this.state.source[this.state.ins_pointer];
-        switch (instruction) {
-            case ">":
-                this.mp_inc(1);
-                this.ip_inc(1);
-                break;
-            case "<":
-                this.mp_inc(-1);
-                this.ip_inc(1);
-                break;
-            case "+":
-                this.v_inc(1);
-                this.ip_inc(1);
-                break;
-            case "-":
-                this.v_inc(-1);
-                this.ip_inc(1);
-                break;
-            case ".":
-                this.putchar();
-                this.ip_inc(1);
-                break;
-            case ",":
-                this.getchar();
-                this.ip_inc(1);
-                break;
-            case "[":
-                this.start_loop();
-                break;
-            case "]":
-                this.end_loop();
-                break;
-        }
-    }
-
-    ip_inc(n) {
-        const len = this.state.source.length;
-        const next = this.posmod(this.state.ins_pointer + n, len);
-        this.setState({ins_pointer: next});
-    }
-
-    mp_inc(n) {
-        const len = this.state.memory.length;
-        const next = this.posmod(this.state.mem_pointer + n, len);
-        this.setState({mem_pointer: next});
-    }
-
-    v_inc(n) {
-        const mem_pointer = this.state.mem_pointer;
-        const len = 255;
-        let new_mem = this.state.memory;
-        new_mem[mem_pointer] = this.posmod(this.state.memory[mem_pointer] + n, len);
-        this.setState({memory: new_mem});
-    }
-    putchar() {
-        const mem_pointer = this.state.mem_pointer;
-        const val = this.state.memory[mem_pointer];
-        console.log(String.fromCharCode(val));
-    }
-    getchar() {}
-    start_loop(ins_index) {
-        const ins_pointer = this.state.ins_pointer
-        const mem_pointer = this.state.mem_pointer;
-        const val = this.state.memory[mem_pointer];
-        if (val == 0) {
-            this.seek_loop_end();
-        } else {
-            this.setState({stack: [...this.state.stack, ins_pointer]});
-            this.ip_inc(1);
-        }
-    }
-    end_loop() {
-        const mem_pointer = this.state.mem_pointer;
-        const val = this.state.memory[mem_pointer];
-        if (val != 0) {
-            const jump_target = this.state.stack.slice(-1)[0];
-            let new_stack = this.state.stack.slice(0, -1);
-            this.setState({stack: new_stack, ins_pointer: jump_target});
-        } else {
-            this.ip_inc(1);
-        }
-    }
-
-    seek_loop_end() {
-        const ins_pointer = -this.state.source.split("").map((v, i, l) => {
-            if(i<this.state.ins_pointer) {
-                return null;
-            } else {
-                if(v === "[") return +1;
-                else if(v === "]") return -1;
-                else return null;
-            }
-        }).reduce((acc, cur, i, l) => {
-            if(acc<0) return acc;
-
-            else if(acc === null && cur) return cur;
-            else if(acc && cur) return acc + cur;
-            else if(acc===0) return -i;
-            else return acc;
-        }, null);
-
-        debugger;
-        this.setState({ins_pointer});
+        const new_state = this.interpreter.step();
+        this.setState({
+            running: true,
+            memory: new_state.memory,
+            ins_pointer: new_state.ins_pointer,
+            mem_pointer: new_state.mem_pointer
+        });
         
-        /*
-        let open_count = 0;
-        while (true) {
-            let instruction = this.state.source[this.state.ins_pointer];
-            if (instruction == "[") {
-                open_count++;
-            } else if (instruction == "]") {
-                if (open_count == 0) {
-                    return;
-                } else {
-                    open_count--;
-                }
-            }
-            this.ip_inc(1);
-        }
-        */
     }
-
 
     render() {
         let box;
@@ -221,11 +115,13 @@ class SourceBox extends Component {
     render() {
         return (
             <div className="sourceBox">
+            <pre>
             {this.props.source.slice(0, this.props.pointer)}
             <span className="pointer">
                 {this.props.source[this.props.pointer]}
             </span>
             {this.props.source.slice(this.props.pointer + 1)}
+            </pre>
             </div>
         )
     }
