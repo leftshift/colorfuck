@@ -15,8 +15,29 @@ export default class Interpreter {
         this.stack = [];
     }
 
-    run(interval = 1) {
-        this.interval = setInterval(() => this._step(), interval);
+    static validate(program) {
+        let opened = 0;
+        for (let i = 0; i < program.length; i++) {
+            const c = program.charAt(i);
+            if (c == "[") {
+                opened++;
+            } else if (c == "]") {
+                if (opened > 0) {
+                    opened--;
+                } else {
+                    return false;
+                }
+            }
+        }
+        if (opened != 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    run(interval = 10) {
+        this.interval = setInterval(() => this.steps(1000), interval);
     }
 
     stop() {
@@ -29,6 +50,16 @@ export default class Interpreter {
     step() {
         this._step();
         return this.state;
+    }
+
+    /**
+     * perform a given number of steps
+     * used because setInterval is capped to 10 ms, but we want to run faster
+     */
+    steps(number) {
+        for (let i = 0; i < number; i++) {
+            this._step();
+        }
     }
 
     /**

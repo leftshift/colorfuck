@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Interpreter from './brainfuckInterpreter';
 
+const bfInstructions = ["+", "-", "<", ">", "[", "]", ",", "."];
+
 export default class App extends Component {
     constructor(props) {
         super(props);
@@ -17,7 +19,7 @@ export default class App extends Component {
 class Machine extends Component { 
     constructor(props) {
         super(props);
-        this.interpreter = new Interpreter(256);
+        this.interpreter = new Interpreter(300);
         const machine_state = this.interpreter.state;
         this.state = {
             source: "",
@@ -42,7 +44,21 @@ class Machine extends Component {
         this.interpreter.source = event.target.value;
     }
     
-    random() {}
+    random() {
+        this.reset()
+        const source = this.constructor._generateRandom(20);
+        this.setState({
+            source: source
+        })
+        this.interpreter.source = source;
+    }
+
+    reset() {
+        this.stop();
+        this.interpreter.reset();
+        this.updateMachineState();
+    }
+
     stop() {
         clearInterval(this.interval);
         this.interpreter.stop();
@@ -59,6 +75,24 @@ class Machine extends Component {
             running: true,
         });
 
+    }
+    static _generateRandomCharacter() {
+        const index = Math.floor(bfInstructions.length * Math.random());
+        return bfInstructions[index];
+    }
+
+    static _generateRandom(length) {
+        let source = ""
+        while (true) {
+            for (let i = 0; i < length; i++) {
+                source += this._generateRandomCharacter();
+            }
+            if (Interpreter.validate(source)) {
+                return source;
+            } else {
+                source = "";
+            }
+        }
     }
 
     step() {
@@ -86,14 +120,14 @@ class Machine extends Component {
                 />
         }
         return (
-            <div>
+            <div className="machine">
+                <Bitmap
+                memory={this.state.memory}
+                />
                 <button onClick={() => this.random()}>🔀</button>
                 <button onClick={() => this.stop()}>⏹️</button>
                 <button onClick={() => this.run()}>▶️</button>
                 <button onClick={() => this.step()}>⏭️</button>
-                <Bitmap
-                memory={this.state.memory}
-                />
                 {box}
             </div>
         )
