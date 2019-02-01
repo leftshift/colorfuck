@@ -61,21 +61,32 @@ class Machine extends Component {
 
     stop() {
         clearInterval(this.interval);
-        this.interpreter.stop();
         this.updateMachineState();
         this.setState({
             running: false,
         });
     }
 
+    _setStepInterval(ms, count) {
+        this.interval = setInterval(() => this._runSteps(count), ms);
+    }
+
     run(){
-        this.interval = setInterval(() => this.updateMachineState(), 100);
-        this.interpreter.run();
+        if (this.state.running) {
+            return;
+        }
+        this._setStepInterval(10, 100);
         this.setState({
             running: true,
         });
 
     }
+
+    _runSteps(number) {
+        this.interpreter.steps(number);
+        this.updateMachineState();
+    }
+
     static _generateRandomCharacter() {
         const index = Math.floor(bfInstructions.length * Math.random());
         return bfInstructions[index];

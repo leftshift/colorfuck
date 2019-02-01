@@ -1,3 +1,23 @@
+html, body, #root {
+    height: 100%;
+    width: 100%;
+}
+.machine {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.split {
+    flex-grow: 1;
+}
+
+.sourceBox,
+.inputBox {
+    font-family: monospace;
+    font-size: 18px;
+}
+
 .bitmap {
     width: 200px;
     display: flex;
@@ -9,12 +29,6 @@
     display: inline-block;
     width: 20px;
     height: 20px;
-}
-
-.sourceBox,
-.inputBox {
-    font-family: monospace;
-    font-size: 18px;
 }
 
 .pointer {
