@@ -16,6 +16,7 @@ export default class Interpreter {
     }
 
     static validate(program) {
+        const regex = /\[\]/gm;
         let opened = 0;
         for (let i = 0; i < program.length; i++) {
             const c = program.charAt(i);
@@ -29,7 +30,7 @@ export default class Interpreter {
                 }
             }
         }
-        if (opened != 0) {
+        if (opened != 0 || program.match(regex)) {
             return false;
         } else {
             return true;
