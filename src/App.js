@@ -23,6 +23,7 @@ class Machine extends Component {
         const machine_state = this.interpreter.state;
         this.state = {
             source: "",
+            length: 10,
             running: false,
             memory: machine_state.memory,
             ins_pointer: machine_state.ins_pointer,
@@ -43,10 +44,15 @@ class Machine extends Component {
         this.setState({source: event.target.value});
         this.interpreter.source = event.target.value;
     }
+
+    _setLength(event) {
+        this.setState({length: event.target.value});
+        this.random();
+    }
     
     random() {
         this.reset()
-        const source = this.constructor._generateRandom(20);
+        const source = this.constructor._generateRandom(this.state.length);
         this.setState({
             source: source
         })
@@ -117,6 +123,7 @@ class Machine extends Component {
         
     }
 
+
     render() {
         let box;
         if (this.state.running) {
@@ -132,15 +139,49 @@ class Machine extends Component {
         }
         return (
             <div className="machine">
-                <Bitmap
-                memory={this.state.memory}
-                />
-                <button onClick={() => this.random()}>🔀</button>
-                <button onClick={() => this.stop()}>⏹️</button>
-                <button onClick={() => this.run()}>▶️</button>
-                <button onClick={() => this.step()}>⏭️</button>
-                {box}
+                <div className="split">
+                    <Bitmap
+                    memory={this.state.memory}
+                    />
+                </div>
+                <div className="split">
+                    <Slider
+                        id="length"
+                        min="1"
+                        max="50"
+                        value={this.state.length}
+                        onChange={(event) => this._setLength(event)}
+                    />
+                    <button onClick={() => this.random()}>🔀</button>
+                    <button onClick={() => this.stop()}>⏹️</button>
+                    <button onClick={() => this.run()}>▶️</button>
+                    <button onClick={() => this.step()}>⏭️</button>
+                    {box}
+                </div>
             </div>
+        )
+    }
+}
+
+class Slider extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            value: 10
+        };
+    }
+
+    render() {
+        return (
+            <input
+                id={this.props.id}
+                type="range"
+                min={this.props.min}
+                max={this.props.max}
+                value={this.props.value}
+                onChange={this.props.onChange}
+                step="1"
+            />
         )
     }
 }
