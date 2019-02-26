@@ -64,12 +64,17 @@ class Machine extends Component {
     }
     
     random() {
+        const wasRunning = this.state.running;
         this.reset()
         const source = this.constructor._generateRandom(this.state.length);
         this.setState({
             source: source
+        }, () => {
+            this.interpreter.source = source;
+            if (wasRunning) {
+                this.run();
+            }
         })
-        this.interpreter.source = source;
     }
 
     reset() {
