@@ -24,7 +24,9 @@ class Machine extends Component {
         this.state = {
             source: "",
             length: 10,
+            speed: 300,
             running: false,
+            locked: false,
             memory: machine_state.memory,
             ins_pointer: machine_state.ins_pointer,
             mem_pointer: machine_state.mem_pointer
@@ -82,6 +84,7 @@ class Machine extends Component {
         this.updateMachineState();
         this.setState({
             running: false,
+            locked: false
         }, cb);
     }
 
@@ -103,6 +106,7 @@ class Machine extends Component {
         this._setStepInterval(interval, steps);
         this.setState({
             running: true,
+            locked: true
         });
 
     }
@@ -134,7 +138,7 @@ class Machine extends Component {
     step() {
         const new_state = this.interpreter.step();
         this.setState({
-            running: true,
+            locked: true,
             memory: new_state.memory,
             ins_pointer: new_state.ins_pointer,
             mem_pointer: new_state.mem_pointer
@@ -145,7 +149,7 @@ class Machine extends Component {
 
     render() {
         let box;
-        if (this.state.running) {
+        if (this.state.locked) {
             box = <SourceBox
                 source={this.state.source}
                 pointer={this.state.ins_pointer}
