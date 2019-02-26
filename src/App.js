@@ -46,8 +46,19 @@ class Machine extends Component {
     }
 
     _setLength(event) {
-        this.setState({length: event.target.value});
-        this.random();
+        this.setState({length: event.target.value},
+            () => this.random()
+        );
+    }
+
+    _setSpeed(event) {
+        this.setState({speed: event.target.value},
+            () => {
+                if (this.state.running) {
+                    this.stop(this.run);
+                }
+            }
+        )
     }
     
     random() {
@@ -65,23 +76,31 @@ class Machine extends Component {
         this.updateMachineState();
     }
 
-    stop() {
+    stop(cb = () => {}) {
+        console.debug("stop");
         clearInterval(this.interval);
         this.updateMachineState();
         this.setState({
             running: false,
-        });
+        }, cb);
     }
 
     _setStepInterval(ms, count) {
+        console.debug(`setting interval to ${ms}ms, ${count} steps`);
         this.interval = setInterval(() => this._runSteps(count), ms);
     }
 
     run(){
+        console.debug("run");
         if (this.state.running) {
             return;
         }
-        this._setStepInterval(10, 100);
+        let speed = this.state.speed;
+
+        const cutoff = 300;
+        let interval = Math.max(cutoff - speed, 10);
+        let steps = Math.max(speed - cutoff, 1);
+        this._setStepInterval(interval, steps);
         this.setState({
             running: true,
         });
@@ -151,6 +170,13 @@ class Machine extends Component {
                         max="50"
                         value={this.state.length}
                         onChange={(event) => this._setLength(event)}
+                    />
+                    <Slider
+                        id="speed"
+                        min="1"
+                        max="1000"
+                        value={this.state.speed}
+                        onChange={(event) => this._setSpeed(event)}
                     />
                     <button onClick={() => this.random()}>🔀</button>
                     <button onClick={() => this.stop()}>⏹️</button>
