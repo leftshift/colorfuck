@@ -2,6 +2,11 @@ html, body, #root {
     height: 100%;
     width: 100%;
 }
+
+body {
+    background-color: #f7f7f7;
+}
+
 .machine {
     display: flex;
     flex-direction: row;
@@ -19,16 +24,14 @@ html, body, #root {
 }
 
 .bitmap {
-    width: 200px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    width: 100%;
+    line-height: 0;
 }
 
 .pixel {
     display: inline-block;
-    width: 20px;
-    height: 20px;
+    width: 10%;
+    padding-bottom: 10%;
 }
 
 .pointer {
