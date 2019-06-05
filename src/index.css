@@ -1,26 +1,60 @@
 html, body, #root {
     height: 100%;
     width: 100%;
+    margin: 0;
 }
 
 body {
-    background-color: #f7f7f7;
+    background-color: #4c8577;
 }
 
 .machine {
+    margin: 10px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 }
 
 .split {
+    flex-basis: 50vh;
     flex-grow: 1;
+    flex-shrink: 0;
+}
+
+.controls {
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.buttons a {
+    color: #000;
+    background-color: #1f7a8c;
+    border-radius: 100%;
+    border: 2px solid #022b3a;
+    width: 3em;
+    height: 3em;
+}
+
+.buttons a:hover {
+    background-color: #238ba0;
+}
+
+.buttons a:active {
+    background-color: #1c7182;
 }
 
 .sourceBox,
 .inputBox {
+    border: 0;
+    padding: 10px;
+    background-color: #404f56;
+    color: #111111;
     font-family: monospace;
     font-size: 18px;
+
 }
 
 .bitmap {
