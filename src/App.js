@@ -191,7 +191,7 @@ class Machine extends Component {
                     <div className="controls">
                         <div className="buttons">
                           <RoundButton onClick={() => this.random()} icon={faRandom}/>
-                          <RoundButton onClick={() => this.stop()} icon={faStop}/>
+                          <RoundButton onClick={() => this.reset()} icon={faStop}/>
                           { ! this.state.running
                               ? <RoundButton onClick={() => this.run()} icon={faPlay}/>
                               : <RoundButton onClick={() => this.pause()} icon={faPause}/>
