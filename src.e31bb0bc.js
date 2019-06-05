@@ -26974,7 +26974,270 @@ var autoReplace = function autoReplace() {
     node: autoReplaceSvgRoot
   });
 };
-},{}],"../node_modules/prop-types/factoryWithTypeCheckers.js":[function(require,module,exports) {
+},{}],"../node_modules/react-is/cjs/react-is.development.js":[function(require,module,exports) {
+/** @license React v16.8.6
+ * react-is.development.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+'use strict';
+
+if ("development" !== "production") {
+  (function () {
+    'use strict';
+
+    Object.defineProperty(exports, '__esModule', {
+      value: true
+    }); // The Symbol used to tag the ReactElement-like types. If there is no native Symbol
+    // nor polyfill, then a plain number is used for performance.
+
+    var hasSymbol = typeof Symbol === 'function' && Symbol.for;
+    var REACT_ELEMENT_TYPE = hasSymbol ? Symbol.for('react.element') : 0xeac7;
+    var REACT_PORTAL_TYPE = hasSymbol ? Symbol.for('react.portal') : 0xeaca;
+    var REACT_FRAGMENT_TYPE = hasSymbol ? Symbol.for('react.fragment') : 0xeacb;
+    var REACT_STRICT_MODE_TYPE = hasSymbol ? Symbol.for('react.strict_mode') : 0xeacc;
+    var REACT_PROFILER_TYPE = hasSymbol ? Symbol.for('react.profiler') : 0xead2;
+    var REACT_PROVIDER_TYPE = hasSymbol ? Symbol.for('react.provider') : 0xeacd;
+    var REACT_CONTEXT_TYPE = hasSymbol ? Symbol.for('react.context') : 0xeace;
+    var REACT_ASYNC_MODE_TYPE = hasSymbol ? Symbol.for('react.async_mode') : 0xeacf;
+    var REACT_CONCURRENT_MODE_TYPE = hasSymbol ? Symbol.for('react.concurrent_mode') : 0xeacf;
+    var REACT_FORWARD_REF_TYPE = hasSymbol ? Symbol.for('react.forward_ref') : 0xead0;
+    var REACT_SUSPENSE_TYPE = hasSymbol ? Symbol.for('react.suspense') : 0xead1;
+    var REACT_MEMO_TYPE = hasSymbol ? Symbol.for('react.memo') : 0xead3;
+    var REACT_LAZY_TYPE = hasSymbol ? Symbol.for('react.lazy') : 0xead4;
+
+    function isValidElementType(type) {
+      return typeof type === 'string' || typeof type === 'function' || // Note: its typeof might be other than 'symbol' or 'number' if it's a polyfill.
+      type === REACT_FRAGMENT_TYPE || type === REACT_CONCURRENT_MODE_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || typeof type === 'object' && type !== null && (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE);
+    }
+    /**
+     * Forked from fbjs/warning:
+     * https://github.com/facebook/fbjs/blob/e66ba20ad5be433eb54423f2b097d829324d9de6/packages/fbjs/src/__forks__/warning.js
+     *
+     * Only change is we use console.warn instead of console.error,
+     * and do nothing when 'console' is not supported.
+     * This really simplifies the code.
+     * ---
+     * Similar to invariant but only logs a warning if the condition is not met.
+     * This can be used to log issues in development environments in critical
+     * paths. Removing the logging code for production environments will keep the
+     * same logic and follow the same code paths.
+     */
+
+
+    var lowPriorityWarning = function () {};
+
+    {
+      var printWarning = function (format) {
+        for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+          args[_key - 1] = arguments[_key];
+        }
+
+        var argIndex = 0;
+        var message = 'Warning: ' + format.replace(/%s/g, function () {
+          return args[argIndex++];
+        });
+
+        if (typeof console !== 'undefined') {
+          console.warn(message);
+        }
+
+        try {
+          // --- Welcome to debugging React ---
+          // This error was thrown as a convenience so that you can use this stack
+          // to find the callsite that caused this warning to fire.
+          throw new Error(message);
+        } catch (x) {}
+      };
+
+      lowPriorityWarning = function (condition, format) {
+        if (format === undefined) {
+          throw new Error('`lowPriorityWarning(condition, format, ...args)` requires a warning ' + 'message argument');
+        }
+
+        if (!condition) {
+          for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+            args[_key2 - 2] = arguments[_key2];
+          }
+
+          printWarning.apply(undefined, [format].concat(args));
+        }
+      };
+    }
+    var lowPriorityWarning$1 = lowPriorityWarning;
+
+    function typeOf(object) {
+      if (typeof object === 'object' && object !== null) {
+        var $$typeof = object.$$typeof;
+
+        switch ($$typeof) {
+          case REACT_ELEMENT_TYPE:
+            var type = object.type;
+
+            switch (type) {
+              case REACT_ASYNC_MODE_TYPE:
+              case REACT_CONCURRENT_MODE_TYPE:
+              case REACT_FRAGMENT_TYPE:
+              case REACT_PROFILER_TYPE:
+              case REACT_STRICT_MODE_TYPE:
+              case REACT_SUSPENSE_TYPE:
+                return type;
+
+              default:
+                var $$typeofType = type && type.$$typeof;
+
+                switch ($$typeofType) {
+                  case REACT_CONTEXT_TYPE:
+                  case REACT_FORWARD_REF_TYPE:
+                  case REACT_PROVIDER_TYPE:
+                    return $$typeofType;
+
+                  default:
+                    return $$typeof;
+                }
+
+            }
+
+          case REACT_LAZY_TYPE:
+          case REACT_MEMO_TYPE:
+          case REACT_PORTAL_TYPE:
+            return $$typeof;
+        }
+      }
+
+      return undefined;
+    } // AsyncMode is deprecated along with isAsyncMode
+
+
+    var AsyncMode = REACT_ASYNC_MODE_TYPE;
+    var ConcurrentMode = REACT_CONCURRENT_MODE_TYPE;
+    var ContextConsumer = REACT_CONTEXT_TYPE;
+    var ContextProvider = REACT_PROVIDER_TYPE;
+    var Element = REACT_ELEMENT_TYPE;
+    var ForwardRef = REACT_FORWARD_REF_TYPE;
+    var Fragment = REACT_FRAGMENT_TYPE;
+    var Lazy = REACT_LAZY_TYPE;
+    var Memo = REACT_MEMO_TYPE;
+    var Portal = REACT_PORTAL_TYPE;
+    var Profiler = REACT_PROFILER_TYPE;
+    var StrictMode = REACT_STRICT_MODE_TYPE;
+    var Suspense = REACT_SUSPENSE_TYPE;
+    var hasWarnedAboutDeprecatedIsAsyncMode = false; // AsyncMode should be deprecated
+
+    function isAsyncMode(object) {
+      {
+        if (!hasWarnedAboutDeprecatedIsAsyncMode) {
+          hasWarnedAboutDeprecatedIsAsyncMode = true;
+          lowPriorityWarning$1(false, 'The ReactIs.isAsyncMode() alias has been deprecated, ' + 'and will be removed in React 17+. Update your code to use ' + 'ReactIs.isConcurrentMode() instead. It has the exact same API.');
+        }
+      }
+      return isConcurrentMode(object) || typeOf(object) === REACT_ASYNC_MODE_TYPE;
+    }
+
+    function isConcurrentMode(object) {
+      return typeOf(object) === REACT_CONCURRENT_MODE_TYPE;
+    }
+
+    function isContextConsumer(object) {
+      return typeOf(object) === REACT_CONTEXT_TYPE;
+    }
+
+    function isContextProvider(object) {
+      return typeOf(object) === REACT_PROVIDER_TYPE;
+    }
+
+    function isElement(object) {
+      return typeof object === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
+    }
+
+    function isForwardRef(object) {
+      return typeOf(object) === REACT_FORWARD_REF_TYPE;
+    }
+
+    function isFragment(object) {
+      return typeOf(object) === REACT_FRAGMENT_TYPE;
+    }
+
+    function isLazy(object) {
+      return typeOf(object) === REACT_LAZY_TYPE;
+    }
+
+    function isMemo(object) {
+      return typeOf(object) === REACT_MEMO_TYPE;
+    }
+
+    function isPortal(object) {
+      return typeOf(object) === REACT_PORTAL_TYPE;
+    }
+
+    function isProfiler(object) {
+      return typeOf(object) === REACT_PROFILER_TYPE;
+    }
+
+    function isStrictMode(object) {
+      return typeOf(object) === REACT_STRICT_MODE_TYPE;
+    }
+
+    function isSuspense(object) {
+      return typeOf(object) === REACT_SUSPENSE_TYPE;
+    }
+
+    exports.typeOf = typeOf;
+    exports.AsyncMode = AsyncMode;
+    exports.ConcurrentMode = ConcurrentMode;
+    exports.ContextConsumer = ContextConsumer;
+    exports.ContextProvider = ContextProvider;
+    exports.Element = Element;
+    exports.ForwardRef = ForwardRef;
+    exports.Fragment = Fragment;
+    exports.Lazy = Lazy;
+    exports.Memo = Memo;
+    exports.Portal = Portal;
+    exports.Profiler = Profiler;
+    exports.StrictMode = StrictMode;
+    exports.Suspense = Suspense;
+    exports.isValidElementType = isValidElementType;
+    exports.isAsyncMode = isAsyncMode;
+    exports.isConcurrentMode = isConcurrentMode;
+    exports.isContextConsumer = isContextConsumer;
+    exports.isContextProvider = isContextProvider;
+    exports.isElement = isElement;
+    exports.isForwardRef = isForwardRef;
+    exports.isFragment = isFragment;
+    exports.isLazy = isLazy;
+    exports.isMemo = isMemo;
+    exports.isPortal = isPortal;
+    exports.isProfiler = isProfiler;
+    exports.isStrictMode = isStrictMode;
+    exports.isSuspense = isSuspense;
+  })();
+}
+},{}],"../node_modules/react-is/index.js":[function(require,module,exports) {
+'use strict';
+
+if ("development" === 'production') {
+  module.exports = require('./cjs/react-is.production.min.js');
+} else {
+  module.exports = require('./cjs/react-is.development.js');
+}
+},{"./cjs/react-is.development.js":"../node_modules/react-is/cjs/react-is.development.js"}],"../node_modules/@fortawesome/react-fontawesome/node_modules/prop-types/lib/ReactPropTypesSecret.js":[function(require,module,exports) {
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+'use strict';
+
+var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
+
+module.exports = ReactPropTypesSecret;
+
+},{}],"../node_modules/@fortawesome/react-fontawesome/node_modules/prop-types/checkPropTypes.js":[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -26983,11 +27246,111 @@ var autoReplace = function autoReplace() {
  */
 'use strict';
 
+var printWarning = function () {};
+
+if ("development" !== 'production') {
+  var ReactPropTypesSecret = require('./lib/ReactPropTypesSecret');
+
+  var loggedTypeFailures = {};
+  var has = Function.call.bind(Object.prototype.hasOwnProperty);
+
+  printWarning = function (text) {
+    var message = 'Warning: ' + text;
+
+    if (typeof console !== 'undefined') {
+      console.error(message);
+    }
+
+    try {
+      // --- Welcome to debugging React ---
+      // This error was thrown as a convenience so that you can use this stack
+      // to find the callsite that caused this warning to fire.
+      throw new Error(message);
+    } catch (x) {}
+  };
+}
+/**
+ * Assert that the values match with the type specs.
+ * Error messages are memorized and will only be shown once.
+ *
+ * @param {object} typeSpecs Map of name to a ReactPropType
+ * @param {object} values Runtime values that need to be type-checked
+ * @param {string} location e.g. "prop", "context", "child context"
+ * @param {string} componentName Name of the component for error messages.
+ * @param {?Function} getStack Returns the component stack.
+ * @private
+ */
+
+
+function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
+  if ("development" !== 'production') {
+    for (var typeSpecName in typeSpecs) {
+      if (has(typeSpecs, typeSpecName)) {
+        var error; // Prop type validation may throw. In case they do, we don't want to
+        // fail the render phase where it didn't fail before. So we log it.
+        // After these have been cleaned up, we'll let them throw.
+
+        try {
+          // This is intentionally an invariant that gets caught. It's the same
+          // behavior as without this statement except with a better message.
+          if (typeof typeSpecs[typeSpecName] !== 'function') {
+            var err = Error((componentName || 'React class') + ': ' + location + ' type `' + typeSpecName + '` is invalid; ' + 'it must be a function, usually from the `prop-types` package, but received `' + typeof typeSpecs[typeSpecName] + '`.');
+            err.name = 'Invariant Violation';
+            throw err;
+          }
+
+          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
+        } catch (ex) {
+          error = ex;
+        }
+
+        if (error && !(error instanceof Error)) {
+          printWarning((componentName || 'React class') + ': type specification of ' + location + ' `' + typeSpecName + '` is invalid; the type checker ' + 'function must return `null` or an `Error` but returned a ' + typeof error + '. ' + 'You may have forgotten to pass an argument to the type checker ' + 'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' + 'shape all require an argument).');
+        }
+
+        if (error instanceof Error && !(error.message in loggedTypeFailures)) {
+          // Only monitor this failure once because there tends to be a lot of the
+          // same error.
+          loggedTypeFailures[error.message] = true;
+          var stack = getStack ? getStack() : '';
+          printWarning('Failed ' + location + ' type: ' + error.message + (stack != null ? stack : ''));
+        }
+      }
+    }
+  }
+}
+/**
+ * Resets warning cache when testing.
+ *
+ * @private
+ */
+
+
+checkPropTypes.resetWarningCache = function () {
+  if ("development" !== 'production') {
+    loggedTypeFailures = {};
+  }
+};
+
+module.exports = checkPropTypes;
+},{"./lib/ReactPropTypesSecret":"../node_modules/@fortawesome/react-fontawesome/node_modules/prop-types/lib/ReactPropTypesSecret.js"}],"../node_modules/@fortawesome/react-fontawesome/node_modules/prop-types/factoryWithTypeCheckers.js":[function(require,module,exports) {
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+'use strict';
+
+var ReactIs = require('react-is');
+
 var assign = require('object-assign');
 
 var ReactPropTypesSecret = require('./lib/ReactPropTypesSecret');
 
 var checkPropTypes = require('./checkPropTypes');
+
+var has = Function.call.bind(Object.prototype.hasOwnProperty);
 
 var printWarning = function () {};
 
@@ -27101,6 +27464,7 @@ module.exports = function (isValidElement, throwOnDirectAccess) {
     any: createAnyTypeChecker(),
     arrayOf: createArrayOfTypeChecker,
     element: createElementTypeChecker(),
+    elementType: createElementTypeTypeChecker(),
     instanceOf: createInstanceTypeChecker,
     node: createNodeChecker(),
     objectOf: createObjectOfTypeChecker,
@@ -27260,6 +27624,21 @@ module.exports = function (isValidElement, throwOnDirectAccess) {
     return createChainableTypeChecker(validate);
   }
 
+  function createElementTypeTypeChecker() {
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+
+      if (!ReactIs.isValidElementType(propValue)) {
+        var propType = getPropType(propValue);
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected a single ReactElement type.'));
+      }
+
+      return null;
+    }
+
+    return createChainableTypeChecker(validate);
+  }
+
   function createInstanceTypeChecker(expectedClass) {
     function validate(props, propName, componentName, location, propFullName) {
       if (!(props[propName] instanceof expectedClass)) {
@@ -27276,7 +27655,14 @@ module.exports = function (isValidElement, throwOnDirectAccess) {
 
   function createEnumTypeChecker(expectedValues) {
     if (!Array.isArray(expectedValues)) {
-      "development" !== 'production' ? printWarning('Invalid argument supplied to oneOf, expected an instance of array.') : void 0;
+      if ("development" !== 'production') {
+        if (arguments.length > 1) {
+          printWarning('Invalid arguments supplied to oneOf, expected an array, got ' + arguments.length + ' arguments. ' + 'A common mistake is to write oneOf(x, y, z) instead of oneOf([x, y, z]).');
+        } else {
+          printWarning('Invalid argument supplied to oneOf, expected an array.');
+        }
+      }
+
       return emptyFunctionThatReturnsNull;
     }
 
@@ -27289,8 +27675,16 @@ module.exports = function (isValidElement, throwOnDirectAccess) {
         }
       }
 
-      var valuesString = JSON.stringify(expectedValues);
-      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of value `' + propValue + '` ' + ('supplied to `' + componentName + '`, expected one of ' + valuesString + '.'));
+      var valuesString = JSON.stringify(expectedValues, function replacer(key, value) {
+        var type = getPreciseType(value);
+
+        if (type === 'symbol') {
+          return String(value);
+        }
+
+        return value;
+      });
+      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of value `' + String(propValue) + '` ' + ('supplied to `' + componentName + '`, expected one of ' + valuesString + '.'));
     }
 
     return createChainableTypeChecker(validate);
@@ -27310,7 +27704,7 @@ module.exports = function (isValidElement, throwOnDirectAccess) {
       }
 
       for (var key in propValue) {
-        if (propValue.hasOwnProperty(key)) {
+        if (has(propValue, key)) {
           var error = typeChecker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
 
           if (error instanceof Error) {
@@ -27487,6 +27881,11 @@ module.exports = function (isValidElement, throwOnDirectAccess) {
     // Native Symbol.
     if (propType === 'symbol') {
       return true;
+    } // falsy value can't be a Symbol
+
+
+    if (!propValue) {
+      return false;
     } // 19.4.3.5 Symbol.prototype[@@toStringTag] === 'Symbol'
 
 
@@ -27574,10 +27973,11 @@ module.exports = function (isValidElement, throwOnDirectAccess) {
   }
 
   ReactPropTypes.checkPropTypes = checkPropTypes;
+  ReactPropTypes.resetWarningCache = checkPropTypes.resetWarningCache;
   ReactPropTypes.PropTypes = ReactPropTypes;
   return ReactPropTypes;
 };
-},{"object-assign":"../node_modules/object-assign/index.js","./lib/ReactPropTypesSecret":"../node_modules/prop-types/lib/ReactPropTypesSecret.js","./checkPropTypes":"../node_modules/prop-types/checkPropTypes.js"}],"../node_modules/prop-types/index.js":[function(require,module,exports) {
+},{"react-is":"../node_modules/react-is/index.js","object-assign":"../node_modules/object-assign/index.js","./lib/ReactPropTypesSecret":"../node_modules/@fortawesome/react-fontawesome/node_modules/prop-types/lib/ReactPropTypesSecret.js","./checkPropTypes":"../node_modules/@fortawesome/react-fontawesome/node_modules/prop-types/checkPropTypes.js"}],"../node_modules/@fortawesome/react-fontawesome/node_modules/prop-types/index.js":[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -27585,22 +27985,18 @@ module.exports = function (isValidElement, throwOnDirectAccess) {
  * LICENSE file in the root directory of this source tree.
  */
 if ("development" !== 'production') {
-  var REACT_ELEMENT_TYPE = typeof Symbol === 'function' && Symbol.for && Symbol.for('react.element') || 0xeac7;
-
-  var isValidElement = function (object) {
-    return typeof object === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
-  }; // By explicitly using `prop-types` you are opting into new development behavior.
+  var ReactIs = require('react-is'); // By explicitly using `prop-types` you are opting into new development behavior.
   // http://fb.me/prop-types-in-prod
 
 
   var throwOnDirectAccess = true;
-  module.exports = require('./factoryWithTypeCheckers')(isValidElement, throwOnDirectAccess);
+  module.exports = require('./factoryWithTypeCheckers')(ReactIs.isElement, throwOnDirectAccess);
 } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
   module.exports = require('./factoryWithThrowingShims')();
 }
-},{"./factoryWithTypeCheckers":"../node_modules/prop-types/factoryWithTypeCheckers.js"}],"../node_modules/@fortawesome/react-fontawesome/index.es.js":[function(require,module,exports) {
+},{"react-is":"../node_modules/react-is/index.js","./factoryWithTypeCheckers":"../node_modules/@fortawesome/react-fontawesome/node_modules/prop-types/factoryWithTypeCheckers.js"}],"../node_modules/@fortawesome/react-fontawesome/index.es.js":[function(require,module,exports) {
 var global = arguments[3];
 "use strict";
 
@@ -28057,7 +28453,7 @@ FontAwesomeIcon.defaultProps = {
   transform: null
 };
 var convertCurry = convert.bind(null, _react.default.createElement);
-},{"@fortawesome/fontawesome-svg-core":"../node_modules/@fortawesome/fontawesome-svg-core/index.es.js","prop-types":"../node_modules/prop-types/index.js","react":"../node_modules/react/index.js"}],"../node_modules/@fortawesome/free-solid-svg-icons/index.es.js":[function(require,module,exports) {
+},{"@fortawesome/fontawesome-svg-core":"../node_modules/@fortawesome/fontawesome-svg-core/index.es.js","prop-types":"../node_modules/@fortawesome/react-fontawesome/node_modules/prop-types/index.js","react":"../node_modules/react/index.js"}],"../node_modules/@fortawesome/free-solid-svg-icons/index.es.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35354,7 +35750,7 @@ function (_Component2) {
         icon: _freeSolidSvgIcons.faRandom
       }), _react.default.createElement(RoundButton, {
         onClick: function onClick() {
-          return _this6.stop();
+          return _this6.reset();
         },
         icon: _freeSolidSvgIcons.faStop
       }), !this.state.running ? _react.default.createElement(RoundButton, {
@@ -35665,7 +36061,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46685" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37131" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
