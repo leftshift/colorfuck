@@ -262,10 +262,12 @@ class RoundButton extends Component {
 class InputBox extends Component {
     render() {
         return (
-            <textarea className="inputBox"
-                onChange={this.props.onChange}
-                value={this.props.source}
-            />
+            <div className="inputBox">
+                <textarea
+                    onChange={this.props.onChange}
+                    value={this.props.source}
+                />
+            </div>
         )
     }
 }
