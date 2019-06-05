@@ -190,13 +190,13 @@ class Machine extends Component {
                 <div className="split">
                     <div className="controls">
                         <div className="buttons">
-                          <a href="#" onClick={() => this.random()}><FontAwesomeIcon icon={faRandom}/></a>
-                          <a href="#" onClick={() => this.stop()}><FontAwesomeIcon icon={faStop}/></a>
+                          <RoundButton onClick={() => this.random()} icon={faRandom}/>
+                          <RoundButton onClick={() => this.stop()} icon={faStop}/>
                           { ! this.state.running
-                              ? <a href="#" onClick={() => this.run()}><FontAwesomeIcon icon={faPlay}/></a>
-                              : <a href="#" onClick={() => this.pause()}><FontAwesomeIcon icon={faPause}/></a>
+                              ? <RoundButton onClick={() => this.run()} icon={faPlay}/>
+                              : <RoundButton onClick={() => this.pause()} icon={faPause}/>
                           }
-                          <a href="#" onClick={() => this.step()}><FontAwesomeIcon icon={faStepForward}/></a>
+                          <RoundButton onClick={() => this.step()} icon={faStepForward}/>
                         </div>
                         <label for="length">length</label>
                         <Slider
@@ -243,6 +243,14 @@ class Slider extends Component {
             />
         )
     }
+}
+
+class RoundButton extends Component {
+    render() {
+      return (
+        <a href="#" onClick={this.props.onClick}><FontAwesomeIcon icon={this.props.icon} size="2x"/></a>
+      )
+    };
 }
 
 class InputBox extends Component {
