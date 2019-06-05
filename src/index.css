@@ -12,17 +12,24 @@ body {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: space-evenly;
 }
 
 .split {
     padding: 10px;
-    flex-basis: 50vh;
+    flex-basis: 40vh;
     flex-grow: 1;
     flex-shrink: 0;
-    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    max-width: 90vh;
+    max-height: 90vh;
 }
 
 .controls {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .buttons {
@@ -30,35 +37,72 @@ body {
     justify-content: space-evenly;
 }
 
-.buttons a {
+.sliders {
+    display: flex;
+    flex-direction: column;
+}
+
+.slider {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    max-width: 500px;
+}
+
+.slider label {
+    color: #eeeeee;
+    flex: 1;
+}
+
+.slider input {
+    flex: 8;
+}
+
+.buttons button {
     color: #000;
     background-color: #1f7a8c;
     border-radius: 100%;
     border: 2px solid #022b3a;
-    width: 3em;
-    height: 3em;
+    width: 4em;
+    height: 4em;
     display: flex;
     justify-content: center;
     align-items: center;
 
 }
 
-.buttons a:hover {
+.buttons button:hover {
     background-color: #238ba0;
 }
 
-.buttons a:active {
+.buttons button:active {
     background-color: #1c7182;
 }
 
 .sourceBox,
 .inputBox {
-    border: 0;
+    flex: 1;
+    margin: 0px;
+    background-color: #7b80a0;
     padding: 10px;
+}
+
+.sourceBox, .inputBox textarea {
     background-color: #7b80a0;
     color: #111111;
     font-family: monospace;
     font-size: 28px;
+    word-break: break-all;
+}
+
+.inputBox textarea {
+    border: none;
+    resize: none;
+    width: 100%;
+}
+
+.sourceBox pre {
+    margin: 0;
 }
 
 .bitmap {
