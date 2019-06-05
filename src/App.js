@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPause, faPlay, faRandom, faStop, faStepForward} from '@fortawesome/free-solid-svg-icons';
+
 import Interpreter from './brainfuckInterpreter';
 
 const bfInstructions = ["+", "-", "<", ">", "[", "]", ",", "."];
@@ -114,6 +117,18 @@ class Machine extends Component {
             locked: true
         });
 
+    }
+
+    pause(){
+        if (! this.state.running) {
+            return;
+        }
+        clearInterval(this.interval);
+        this.updateMachineState();
+        this.setState({
+            running: false,
+            locked: true
+        });
     }
 
     _runSteps(number) {
