@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPause, faPlay, faRandom, faStop, faStepForward} from '@fortawesome/free-solid-svg-icons';
+import { faPause, faPlay, faRandom, faStop, faStepForward, faTachometerAlt, faRuler } from '@fortawesome/free-solid-svg-icons';
 
 import Interpreter from './brainfuckInterpreter';
 
@@ -198,22 +198,28 @@ class Machine extends Component {
                           }
                           <RoundButton onClick={() => this.step()} icon={faStepForward}/>
                         </div>
-                        <label for="length">length</label>
-                        <Slider
-                            id="length"
-                            min="1"
-                            max="50"
-                            value={this.state.length}
-                            onChange={(event) => this._setLength(event)}
-                        />
-                        <label for="speed">speed</label>
-                        <Slider
-                            id="speed"
-                            min="1"
-                            max="1000"
-                            value={this.state.speed}
-                            onChange={(event) => this._setSpeed(event)}
-                        />
+                        <div className="sliders">
+                            <div className="slider">
+                              <label for="length"><FontAwesomeIcon icon={faRuler} size="2x"/></label>
+                              <Slider
+                                  id="length"
+                                  min="1"
+                                  max="50"
+                                  value={this.state.length}
+                                  onChange={(event) => this._setLength(event)}
+                              />
+                            </div>
+                            <div className="slider">
+                                <label for="speed"><FontAwesomeIcon icon={faTachometerAlt} size="2x"/></label>
+                                <Slider
+                                    id="speed"
+                                    min="1"
+                                    max="1000"
+                                    value={this.state.speed}
+                                    onChange={(event) => this._setSpeed(event)}
+                                />
+                            </div>
+                        </div>
                     </div>
                     {box}
                 </div>
