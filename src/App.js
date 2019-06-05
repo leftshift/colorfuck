@@ -189,10 +189,15 @@ class Machine extends Component {
                 </div>
                 <div className="split">
                     <div className="controls">
-                        <button onClick={() => this.random()}>🔀</button>
-                        <button onClick={() => this.stop()}>⏹️</button>
-                        <button onClick={() => this.run()}>▶️</button>
-                        <button onClick={() => this.step()}>⏭️</button>
+                        <div className="buttons">
+                          <a href="#" onClick={() => this.random()}><FontAwesomeIcon icon={faRandom}/></a>
+                          <a href="#" onClick={() => this.stop()}><FontAwesomeIcon icon={faStop}/></a>
+                          { ! this.state.running
+                              ? <a href="#" onClick={() => this.run()}><FontAwesomeIcon icon={faPlay}/></a>
+                              : <a href="#" onClick={() => this.pause()}><FontAwesomeIcon icon={faPause}/></a>
+                          }
+                          <a href="#" onClick={() => this.step()}><FontAwesomeIcon icon={faStepForward}/></a>
+                        </div>
                         <label for="length">length</label>
                         <Slider
                             id="length"
