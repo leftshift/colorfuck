@@ -173,24 +173,28 @@ class Machine extends Component {
                     />
                 </div>
                 <div className="split">
-                    <Slider
-                        id="length"
-                        min="1"
-                        max="50"
-                        value={this.state.length}
-                        onChange={(event) => this._setLength(event)}
-                    />
-                    <Slider
-                        id="speed"
-                        min="1"
-                        max="1000"
-                        value={this.state.speed}
-                        onChange={(event) => this._setSpeed(event)}
-                    />
-                    <button onClick={() => this.random()}>🔀</button>
-                    <button onClick={() => this.stop()}>⏹️</button>
-                    <button onClick={() => this.run()}>▶️</button>
-                    <button onClick={() => this.step()}>⏭️</button>
+                    <div className="controls">
+                        <button onClick={() => this.random()}>🔀</button>
+                        <button onClick={() => this.stop()}>⏹️</button>
+                        <button onClick={() => this.run()}>▶️</button>
+                        <button onClick={() => this.step()}>⏭️</button>
+                        <label for="length">length</label>
+                        <Slider
+                            id="length"
+                            min="1"
+                            max="50"
+                            value={this.state.length}
+                            onChange={(event) => this._setLength(event)}
+                        />
+                        <label for="speed">speed</label>
+                        <Slider
+                            id="speed"
+                            min="1"
+                            max="1000"
+                            value={this.state.speed}
+                            onChange={(event) => this._setSpeed(event)}
+                        />
+                    </div>
                     {box}
                 </div>
             </div>
