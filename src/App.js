@@ -25,8 +25,8 @@ class Machine extends Component {
         this.interpreter = new Interpreter(300);
         const machine_state = this.interpreter.state;
         this.state = {
-            source: this.constructor._generateRandom(10),
-            length: 10,
+            source: this.constructor._generateRandom(14),
+            length: 14,
             speed: 300,
             running: false,
             locked: false,
