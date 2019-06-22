@@ -117,12 +117,8 @@ body {
 .bitmap {
     width: 100%;
     line-height: 0;
-}
-
-.pixel {
-    display: inline-block;
-    width: 10%;
-    padding-bottom: 10%;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
 }
 
 .pointer {

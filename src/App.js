@@ -294,40 +294,33 @@ class SourceBox extends Component {
 }
 
 class Bitmap extends Component {
-    render() {
-        const mem = this.props.memory;
-
-        // var pixels = Array(Math.floor(mem.length / 3))
-        const pixels = mem.map((v, i, l) => i % 3 == 0 ? <Pixel key={i} r={v} g={l[i+1]} b={l[i+2]} /> : null).filter(v => v);
-
-//        for (var i=0; i<mem.length; i = i+3) {
-//            pixels.push(
-//                <Pixel
-//                key={i}
-//                r={mem[i]}
-//                g={mem[i+1]}
-//                b={mem[i+2]}
-//                />
-//            )
-//        }
-        return (
-            <div className="bitmap">
-            {pixels}
-            </div>
-        )
+    componentDidMount() {
+        this.updateCanvas();
     }
-}
 
-class Pixel extends Component {
-    render() {
-        const {r, g, b} = this.props;
-        const style = {
-            backgroundColor: `rgb(${r}, ${g}, ${b})`,
+    componentDidUpdate() {
+        this.updateCanvas();
+    }
+
+    updateCanvas() {
+        const mem = this.props.memory;
+        const ctx = this.refs.canvas.getContext("2d");
+
+        for (var y = 0; y < 10; y++) {
+            for (var x = 0; x < 10; x++) {
+                var r = mem[30 * y + 3 * x + 0];
+                var g = mem[30 * y + 3 * x + 1];
+                var b = mem[30 * y + 3 * x + 2];
+
+                ctx.fillStyle = "rgb("+r+","+g+","+b+")";
+                ctx.fillRect(x, y, 1, 1);
+            }
         }
+    }
+
+    render() {
         return (
-            <div className="pixel"
-            style={style}
-            />
+                <canvas className="bitmap" ref="canvas" width={10} height={10} />
         )
     }
 }
