@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPause, faPlay, faRandom, faStop, faStepForward, faTachometerAlt, faRuler } from '@fortawesome/free-solid-svg-icons';
+import { faPause, faPlay, faRandom, faStop, faStepForward, faTachometerAlt, faRuler, faTh, faAngleDoubleDown } from '@fortawesome/free-solid-svg-icons';
 
 import Interpreter from './brainfuckInterpreter';
 
@@ -30,6 +30,7 @@ class Machine extends Component {
             speed: 300,
             running: false,
             locked: false,
+            isWaterfall: false,
             memory: machine_state.memory,
             ins_pointer: machine_state.ins_pointer,
             mem_pointer: machine_state.mem_pointer
@@ -166,6 +167,12 @@ class Machine extends Component {
 
     }
 
+    setWaterfallMode(mode) {
+        this.setState({
+            isWaterfall: mode
+        });
+    }
+
 
     render() {
         let box;
@@ -184,12 +191,17 @@ class Machine extends Component {
             <div className="machine">
                 <div className="split">
                     <Bitmap
-                    memory={this.state.memory}
+                        memory={this.state.memory}
+                        waterfall={this.state.isWaterfall}
                     />
                 </div>
                 <div className="split">
                     <div className="controls">
                         <div className="buttons">
+                          { this.state.isWaterfall
+                              ? <RoundButton onClick={() => this.setWaterfallMode(false)} icon={faTh}><span>Switch to Grid Mode</span></RoundButton>
+                              : <RoundButton onClick={() => this.setWaterfallMode(true)} icon={faAngleDoubleDown}><span>Switch to Waterfall Mode</span></RoundButton>
+                          }
                           <RoundButton onClick={() => this.random()} icon={faRandom}><span>New Sample</span></RoundButton>
                           <RoundButton onClick={() => this.reset()} icon={faStop}/>
                           { ! this.state.running
@@ -303,6 +315,14 @@ class Bitmap extends Component {
     }
 
     updateCanvas() {
+        if (this.props.waterfall) {
+            this.updateCanvasWaterfall();
+        } else {
+            this.updateCanvasGrid();
+        }
+    }
+
+    updateCanvasGrid() {
         const mem = this.props.memory;
         const ctx = this.refs.canvas.getContext("2d");
 
@@ -318,9 +338,32 @@ class Bitmap extends Component {
         }
     }
 
+    updateCanvasWaterfall() {
+        const mem = this.props.memory;
+        const ctx = this.refs.canvas.getContext("2d");
+
+        const image = ctx.getImageData(0, 1, ctx.canvas.width, ctx.canvas.height-1);
+        ctx.putImageData(image, 0, 0);
+
+        for (var x = 0; x < 100; x++) {
+            var r = mem[3 * x + 0];
+            var g = mem[3 * x + 1];
+            var b = mem[3 * x + 2];
+
+            ctx.fillStyle = "rgb("+r+","+g+","+b+")";
+            ctx.fillRect(x, 99, 1, 1);
+        }
+    }
+
     render() {
-        return (
-                <canvas className="bitmap" ref="canvas" width={10} height={10} />
-        )
+        if (this.props.waterfall) {
+            return (
+                    <canvas className="bitmap" ref="canvas" width={100} height={100} />
+            )
+        } else {
+            return (
+                    <canvas className="bitmap" ref="canvas" width={10} height={10} />
+            )
+        }
     }
 }
