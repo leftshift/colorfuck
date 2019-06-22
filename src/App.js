@@ -19,7 +19,7 @@ export default class App extends Component {
     }
 }
 
-class Machine extends Component { 
+class Machine extends Component {
     constructor(props) {
         super(props);
         this.interpreter = new Interpreter(300);
@@ -65,7 +65,7 @@ class Machine extends Component {
             }
         )
     }
-    
+
     random() {
         const wasRunning = this.state.running;
         this.reset()
@@ -163,7 +163,7 @@ class Machine extends Component {
             ins_pointer: new_state.ins_pointer,
             mem_pointer: new_state.mem_pointer
         });
-        
+
     }
 
 
