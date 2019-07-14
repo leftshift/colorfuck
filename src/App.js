@@ -190,7 +190,7 @@ class Machine extends Component {
                 <div className="split">
                     <div className="controls">
                         <div className="buttons">
-                          <RoundButton onClick={() => this.random()} icon={faRandom}/>
+                          <RoundButton onClick={() => this.random()} icon={faRandom}><span>New Sample</span></RoundButton>
                           <RoundButton onClick={() => this.reset()} icon={faStop}/>
                           { ! this.state.running
                               ? <RoundButton onClick={() => this.run()} icon={faPlay}/>
@@ -200,7 +200,7 @@ class Machine extends Component {
                         </div>
                         <div className="sliders">
                             <div className="slider">
-                              <label for="length"><FontAwesomeIcon icon={faRuler} size="2x"/></label>
+                              <label htmlFor="length"><FontAwesomeIcon icon={faRuler} size="2x"/></label>
                               <Slider
                                   id="length"
                                   min="1"
@@ -210,7 +210,7 @@ class Machine extends Component {
                               />
                             </div>
                             <div className="slider">
-                                <label for="speed"><FontAwesomeIcon icon={faTachometerAlt} size="2x"/></label>
+                                <label htmlFor="speed"><FontAwesomeIcon icon={faTachometerAlt} size="2x"/></label>
                                 <Slider
                                     id="speed"
                                     min="1"
@@ -254,7 +254,12 @@ class Slider extends Component {
 class RoundButton extends Component {
     render() {
       return (
-        <button onClick={this.props.onClick}><FontAwesomeIcon icon={this.props.icon} size="2x"/></button>
+        <button onClick={this.props.onClick}>
+          <div className="buttonIconBox">
+            <FontAwesomeIcon icon={this.props.icon} size="1x"/>
+          </div>
+          {this.props.children}
+        </button>
       )
     };
 }

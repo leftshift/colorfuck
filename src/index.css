@@ -61,14 +61,20 @@ body {
 .buttons button {
     color: #000;
     background-color: #1f7a8c;
-    border-radius: 100%;
+    border-radius: 2em;
     border: 2px solid #022b3a;
-    width: 4em;
-    height: 4em;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    font-size: 2em;
+}
+
+.buttonIconBox {
+    width: 2em;
+    height: 2em;
     display: flex;
     justify-content: center;
     align-items: center;
-
 }
 
 .buttons button:hover {
