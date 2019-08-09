@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPause, faPlay, faRandom, faStop, faStepForward, faTachometerAlt, faRuler } from '@fortawesome/free-solid-svg-icons';
+import { faPause, faPlay, faRandom, faStop, faStepForward, faTachometerAlt, faRuler, faTh, faAngleDoubleDown } from '@fortawesome/free-solid-svg-icons';
 
 import Interpreter from './brainfuckInterpreter';
 
@@ -19,7 +19,7 @@ export default class App extends Component {
     }
 }
 
-class Machine extends Component { 
+class Machine extends Component {
     constructor(props) {
         super(props);
         this.interpreter = new Interpreter(300);
@@ -30,6 +30,7 @@ class Machine extends Component {
             speed: 300,
             running: false,
             locked: false,
+            isWaterfall: false,
             memory: machine_state.memory,
             ins_pointer: machine_state.ins_pointer,
             mem_pointer: machine_state.mem_pointer
@@ -65,7 +66,7 @@ class Machine extends Component {
             }
         )
     }
-    
+
     random() {
         const wasRunning = this.state.running;
         this.reset()
@@ -163,7 +164,13 @@ class Machine extends Component {
             ins_pointer: new_state.ins_pointer,
             mem_pointer: new_state.mem_pointer
         });
-        
+
+    }
+
+    setWaterfallMode(mode) {
+        this.setState({
+            isWaterfall: mode
+        });
     }
 
 
@@ -184,12 +191,17 @@ class Machine extends Component {
             <div className="machine">
                 <div className="split">
                     <Bitmap
-                    memory={this.state.memory}
+                        memory={this.state.memory}
+                        waterfall={this.state.isWaterfall}
                     />
                 </div>
                 <div className="split">
                     <div className="controls">
                         <div className="buttons">
+                          { this.state.isWaterfall
+                              ? <RoundButton onClick={() => this.setWaterfallMode(false)} icon={faTh}><span>Grid</span></RoundButton>
+                              : <RoundButton onClick={() => this.setWaterfallMode(true)} icon={faAngleDoubleDown}><span>Waterfall</span></RoundButton>
+                          }
                           <RoundButton onClick={() => this.random()} icon={faRandom}><span>New Sample</span></RoundButton>
                           <RoundButton onClick={() => this.reset()} icon={faStop}/>
                           { ! this.state.running
@@ -294,40 +306,64 @@ class SourceBox extends Component {
 }
 
 class Bitmap extends Component {
-    render() {
-        const mem = this.props.memory;
-
-        // var pixels = Array(Math.floor(mem.length / 3))
-        const pixels = mem.map((v, i, l) => i % 3 == 0 ? <Pixel key={i} r={v} g={l[i+1]} b={l[i+2]} /> : null).filter(v => v);
-
-//        for (var i=0; i<mem.length; i = i+3) {
-//            pixels.push(
-//                <Pixel
-//                key={i}
-//                r={mem[i]}
-//                g={mem[i+1]}
-//                b={mem[i+2]}
-//                />
-//            )
-//        }
-        return (
-            <div className="bitmap">
-            {pixels}
-            </div>
-        )
+    componentDidMount() {
+        this.updateCanvas();
     }
-}
 
-class Pixel extends Component {
-    render() {
-        const {r, g, b} = this.props;
-        const style = {
-            backgroundColor: `rgb(${r}, ${g}, ${b})`,
+    componentDidUpdate() {
+        this.updateCanvas();
+    }
+
+    updateCanvas() {
+        if (this.props.waterfall) {
+            this.updateCanvasWaterfall();
+        } else {
+            this.updateCanvasGrid();
         }
-        return (
-            <div className="pixel"
-            style={style}
-            />
-        )
+    }
+
+    updateCanvasGrid() {
+        const mem = this.props.memory;
+        const ctx = this.refs.canvas.getContext("2d");
+
+        for (var y = 0; y < 10; y++) {
+            for (var x = 0; x < 10; x++) {
+                var r = mem[30 * y + 3 * x + 0];
+                var g = mem[30 * y + 3 * x + 1];
+                var b = mem[30 * y + 3 * x + 2];
+
+                ctx.fillStyle = "rgb("+r+","+g+","+b+")";
+                ctx.fillRect(x, y, 1, 1);
+            }
+        }
+    }
+
+    updateCanvasWaterfall() {
+        const mem = this.props.memory;
+        const ctx = this.refs.canvas.getContext("2d");
+
+        const image = ctx.getImageData(0, 1, ctx.canvas.width, ctx.canvas.height-1);
+        ctx.putImageData(image, 0, 0);
+
+        for (var x = 0; x < 100; x++) {
+            var r = mem[3 * x + 0];
+            var g = mem[3 * x + 1];
+            var b = mem[3 * x + 2];
+
+            ctx.fillStyle = "rgb("+r+","+g+","+b+")";
+            ctx.fillRect(x, 99, 1, 1);
+        }
+    }
+
+    render() {
+        if (this.props.waterfall) {
+            return (
+                    <canvas className="bitmap" ref="canvas" width={100} height={100} />
+            )
+        } else {
+            return (
+                    <canvas className="bitmap" ref="canvas" width={10} height={10} />
+            )
+        }
     }
 }
