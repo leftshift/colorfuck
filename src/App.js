@@ -199,8 +199,8 @@ class Machine extends Component {
                     <div className="controls">
                         <div className="buttons">
                           { this.state.isWaterfall
-                              ? <RoundButton onClick={() => this.setWaterfallMode(false)} icon={faTh}><span>Switch to Grid Mode</span></RoundButton>
-                              : <RoundButton onClick={() => this.setWaterfallMode(true)} icon={faAngleDoubleDown}><span>Switch to Waterfall Mode</span></RoundButton>
+                              ? <RoundButton onClick={() => this.setWaterfallMode(false)} icon={faTh}><span>Grid</span></RoundButton>
+                              : <RoundButton onClick={() => this.setWaterfallMode(true)} icon={faAngleDoubleDown}><span>Waterfall</span></RoundButton>
                           }
                           <RoundButton onClick={() => this.random()} icon={faRandom}><span>New Sample</span></RoundButton>
                           <RoundButton onClick={() => this.reset()} icon={faStop}/>
