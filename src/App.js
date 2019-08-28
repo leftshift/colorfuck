@@ -192,24 +192,27 @@ class Machine extends Component {
                         <div className="buttons">
                           <RoundButton
                             onClick={() => this.random()}
-                            icon={faRandom}>
+                            icon={faRandom}
+                            title="generate new random sample">
                               <span>New Sample</span>
                           </RoundButton>
                           <RoundButton
                             onClick={() => this.reset()}
-                            icon={faStop}/>
+                            icon={faStop}
+                            title="stop"/>
                           { ! this.state.running
-                              ? <RoundButton onClick={() => this.run()} icon={faPlay}/>
-                              : <RoundButton onClick={() => this.pause()} icon={faPause}/>
+                              ? <RoundButton onClick={() => this.run()} icon={faPlay} title="run"/>
+                              : <RoundButton onClick={() => this.pause()} icon={faPause} title="stop"/>
                           }
                           <RoundButton
                             onClick={() => this.step()}
                             icon={faStepForward}
-                            disabled={this.state.running}/>
+                            disabled={this.state.running}
+                            title="run single step"/>
                         </div>
                         <div className="sliders">
                             <div className="slider">
-                              <label htmlFor="length"><FontAwesomeIcon icon={faRuler} size="2x"/></label>
+                              <label htmlFor="length"><FontAwesomeIcon icon={faRuler} size="2x"/> Length</label>
                               <Slider
                                   id="length"
                                   min="1"
@@ -219,7 +222,7 @@ class Machine extends Component {
                               />
                             </div>
                             <div className="slider">
-                                <label htmlFor="speed"><FontAwesomeIcon icon={faTachometerAlt} size="2x"/></label>
+                                <label htmlFor="speed"><FontAwesomeIcon icon={faTachometerAlt} size="2x"/> Speed</label>
                                 <Slider
                                     id="speed"
                                     min="1"
@@ -263,7 +266,7 @@ class Slider extends Component {
 class RoundButton extends Component {
     render() {
       return (
-        <button onClick={this.props.onClick} disabled={this.props.disabled}>
+        <button onClick={this.props.onClick} disabled={this.props.disabled} title={this.props.title}>
           <div className="buttonIconBox">
             <FontAwesomeIcon icon={this.props.icon} size="1x"/>
           </div>
