@@ -190,13 +190,22 @@ class Machine extends Component {
                 <div className="split">
                     <div className="controls">
                         <div className="buttons">
-                          <RoundButton onClick={() => this.random()} icon={faRandom}><span>New Sample</span></RoundButton>
-                          <RoundButton onClick={() => this.reset()} icon={faStop}/>
+                          <RoundButton
+                            onClick={() => this.random()}
+                            icon={faRandom}>
+                              <span>New Sample</span>
+                          </RoundButton>
+                          <RoundButton
+                            onClick={() => this.reset()}
+                            icon={faStop}/>
                           { ! this.state.running
                               ? <RoundButton onClick={() => this.run()} icon={faPlay}/>
                               : <RoundButton onClick={() => this.pause()} icon={faPause}/>
                           }
-                          <RoundButton onClick={() => this.step()} icon={faStepForward}/>
+                          <RoundButton
+                            onClick={() => this.step()}
+                            icon={faStepForward}
+                            disabled={this.state.running}/>
                         </div>
                         <div className="sliders">
                             <div className="slider">
