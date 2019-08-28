@@ -194,12 +194,8 @@ class Machine extends Component {
                             onClick={() => this.random()}
                             icon={faRandom}
                             title="generate new random sample">
-                              <span>New Sample</span>
+                              <span>New</span>
                           </RoundButton>
-                          <RoundButton
-                            onClick={() => this.reset()}
-                            icon={faStop}
-                            title="stop"/>
                           { ! this.state.running
                               ? <RoundButton onClick={() => this.run()} icon={faPlay} title="run"/>
                               : <RoundButton onClick={() => this.pause()} icon={faPause} title="stop"/>
@@ -209,6 +205,10 @@ class Machine extends Component {
                             icon={faStepForward}
                             disabled={this.state.running}
                             title="run single step"/>
+                          <RoundButton
+                            onClick={() => this.reset()}
+                            icon={faStop}
+                            title="stop"/>
                         </div>
                         <div className="sliders">
                             <div className="slider">
