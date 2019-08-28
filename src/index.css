@@ -85,6 +85,10 @@ body {
     background-color: #1c7182;
 }
 
+.buttons button:disabled {
+    background-color: #9d9d9d;
+}
+
 .sourceBox,
 .inputBox {
     flex: 1;

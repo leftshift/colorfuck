@@ -254,7 +254,7 @@ class Slider extends Component {
 class RoundButton extends Component {
     render() {
       return (
-        <button onClick={this.props.onClick}>
+        <button onClick={this.props.onClick} disabled={this.props.disabled}>
           <div className="buttonIconBox">
             <FontAwesomeIcon icon={this.props.icon} size="1x"/>
           </div>
