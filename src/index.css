@@ -69,6 +69,11 @@ body {
     font-size: 2em;
 }
 
+.buttons button>span {
+    padding-right: 0.5em;
+    font-weight: 600;
+}
+
 .buttonIconBox {
     width: 2em;
     height: 2em;
