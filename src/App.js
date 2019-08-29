@@ -40,6 +40,16 @@ class Machine extends Component {
             ins_pointer: machine_state.ins_pointer,
             mem_pointer: machine_state.mem_pointer
         };
+        this._attachHistoryListener();
+    }
+
+    _attachHistoryListener() {
+        window.onpopstate = event => {
+            this.setState({
+                source: event.state.source
+            });
+            this.reset();
+        }
     }
 
     updateMachineState() {
@@ -54,6 +64,7 @@ class Machine extends Component {
     handleChange(event) {
         this.setState({source: event.target.value});
         this.interpreter.source = event.target.value;
+        history.replaceState({source: event.target.value}, 'source', '?s=' + event.target.value);
     }
 
     _setLength(event) {
@@ -119,7 +130,7 @@ class Machine extends Component {
             running: true,
             locked: true
         });
-
+        history.pushState({source: this.state.source}, 'run', '?s=' + this.state.source)
     }
 
     pause(){
