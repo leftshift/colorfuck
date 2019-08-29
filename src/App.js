@@ -215,7 +215,7 @@ class Machine extends Component {
                             onClick={() => this.random()}
                             icon={faRandom}
                             title="generate new random sample">
-                              <span>New</span>
+                              <span>Go!</span>
                           </RoundButton>
                           { ! this.state.running
                               ? <RoundButton onClick={() => this.run()} icon={faPlay} title="run"/>
@@ -233,7 +233,7 @@ class Machine extends Component {
                         </div>
                         <div className="sliders">
                             <div className="slider">
-                              <label htmlFor="length"><FontAwesomeIcon icon={faRuler} size="2x"/> Length</label>
+                              <label htmlFor="length"><FontAwesomeIcon icon={faRuler} size="1x"/> Length</label>
                               <Slider
                                   id="length"
                                   min="1"
@@ -243,7 +243,7 @@ class Machine extends Component {
                               />
                             </div>
                             <div className="slider">
-                                <label htmlFor="speed"><FontAwesomeIcon icon={faTachometerAlt} size="2x"/> Speed</label>
+                                <label htmlFor="speed"><FontAwesomeIcon icon={faTachometerAlt} size="1x"/> Speed</label>
                                 <Slider
                                     id="speed"
                                     min="1"

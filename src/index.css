@@ -6,6 +6,7 @@ html, body, #root {
 
 body {
     background-color: #404356;
+    font-family: sans;
 }
 
 .machine {
@@ -52,6 +53,8 @@ body {
 .slider label {
     color: #eeeeee;
     flex: 1;
+    min-width: 5.5em;
+    font-size: 2em;
 }
 
 .slider input {
