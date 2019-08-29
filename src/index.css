@@ -140,3 +140,11 @@ body {
 .pointer {
     background-color: lightgray;
 }
+
+#explanation {
+    max-width: 65em;
+    margin: auto;
+    background-color: #7b80a0;
+    padding: 1em;
+
+}
