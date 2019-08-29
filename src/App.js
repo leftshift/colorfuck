@@ -32,6 +32,7 @@ class Machine extends Component {
         const sourceParam = urlParams.get('s');
         this.state = {
             source: sourceParam || this.constructor._generateRandom(14),
+            lastPushedSource: "",
             length: 14,
             speed: 300,
             running: false,
@@ -46,7 +47,8 @@ class Machine extends Component {
     _attachHistoryListener() {
         window.onpopstate = event => {
             this.setState({
-                source: event.state.source
+                source: event.state.source,
+                lastPushedSource: event.state.source
             });
             this.reset();
         }
@@ -130,7 +132,12 @@ class Machine extends Component {
             running: true,
             locked: true
         });
-        history.pushState({source: this.state.source}, 'run', '?s=' + this.state.source)
+        if (this.state.lastPushedSource != this.state.source) {
+            history.pushState({source: this.state.source}, 'run', '?s=' + this.state.source);
+            this.setState({
+                lastPushedSource: this.state.source,
+            });
+        }
     }
 
     pause(){
