@@ -65,7 +65,6 @@ class Machine extends Component {
 
     handleChange(event) {
         this.setState({source: event.target.value});
-        this.interpreter.source = event.target.value;
         history.replaceState({source: event.target.value}, 'source', '?s=' + event.target.value);
     }
 
@@ -126,6 +125,7 @@ class Machine extends Component {
             return;
         }
         let speed = this.state.speed;
+        this.interpreter.source = this.state.source;
 
         const cutoff = 300;
         let interval = Math.max(cutoff - speed, 10);
