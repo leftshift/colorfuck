@@ -55,6 +55,10 @@ body {
     font-size: 2em;
 }
 
+.slider label #speed {
+    font-size: 1.1em;
+}
+
 .slider input {
     flex: 8;
 }

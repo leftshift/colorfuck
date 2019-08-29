@@ -246,7 +246,7 @@ class Machine extends Component {
                               />
                             </div>
                             <div className="slider">
-                                <label htmlFor="speed"><FontAwesomeIcon icon={faTachometerAlt} size="1x"/> Speed</label>
+                                <label htmlFor="speed"><FontAwesomeIcon icon={faTachometerAlt} size="1x" id="speed"/> Speed</label>
                                 <Slider
                                     id="speed"
                                     min="1"
