@@ -71,7 +71,7 @@ class Machine extends Component {
 
     _setLength(event) {
         this.setState({length: event.target.value},
-            () => this.random()
+            () => this.random(false)
         );
     }
 
@@ -85,7 +85,7 @@ class Machine extends Component {
         )
     }
 
-    random() {
+    random(autostart) {
         const wasRunning = this.state.running;
         this.reset()
         const source = this.constructor._generateRandom(this.state.length);
@@ -93,7 +93,7 @@ class Machine extends Component {
             source: source
         }, () => {
             this.interpreter.source = source;
-            if (wasRunning) {
+            if (wasRunning || autostart) {
                 this.run();
             }
         })
@@ -215,10 +215,7 @@ class Machine extends Component {
                     <div className="controls">
                         <div className="buttons">
                           <RoundButton
-                            onClick={() => {
-                              this.random();
-                              this.run();
-                            }}
+                            onClick={() => this.random(true)}
                             icon={faRandom}
                             title="generate new random sample">
                               <span>Go!</span>
