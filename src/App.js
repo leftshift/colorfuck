@@ -24,8 +24,14 @@ class Machine extends Component {
         super(props);
         this.interpreter = new Interpreter(300);
         const machine_state = this.interpreter.state;
+
+        // to make the query parameter look a bit nicer, we treat `+` as a literal plus, not as a space (as is common). Spaces may still be encoded as %20.
+        // However, URLSearchParams honers this convention, so we replace all + with the %-representation of + so they aren't treated as spaces
+        const params = window.location.search.replace(/\+/g, "%2B");
+        const urlParams = new URLSearchParams(params);
+        const sourceParam = urlParams.get('s');
         this.state = {
-            source: this.constructor._generateRandom(14),
+            source: sourceParam || this.constructor._generateRandom(14),
             length: 14,
             speed: 300,
             running: false,
