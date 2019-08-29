@@ -14,32 +14,48 @@
         We randomly generate computer programs, run them, and see what they do. On the left, you see a visualisation of the memory the program is running in, on the right, you see the code that makes up the program.
     </p>
 
-    <h3>On the left</h3>
-    <p>
+    <section>
+    <h3 class="bunch">On the left</h3>
+    <p class="bunch">
     we see the memory the program runs in. There are 300 cells, each can hold a value from <code>0</code> to <code>255</code>. Three of those cells make up one pixel, the first cell determines the amount of red, the second the amount of green and the third the amount of blue that is used. So if all cells are <code>0</code>, the pixel is black, if the first one is <code>255</code>, it's bright red, if all three are <code>255</code>, the pixel is white.
     </p>
     <p>
     This makes a total of 100 pixels, arranged from left to right, top to bottom.
     </p>
-    <h3>On the right</h3>
-    <p>
+    </section>
+
+    <section>
+    <h3 class="bunch">On the right</h3>
+    <p class="bunch">
     we see our program. The language we use is brainfuck, a rather esoteric language that isn't really used to build applications but <a>has some useful properties</a>. When pressing the shuffle button, a new program is generated. When the program is running, a box shows which instruction is currently executed. Each character on its own is a <a>separate instruction</a>.
     </p>
+    </section>
+
     <h2>A quick primer on Brainfuck</h2>
-    <h3>The Tape</h3>
-    <p>
+    <section>
+    <h3 class="bunch">The Tape</h3>
+    <p class="bunch">
     holds the memory cells. In theory, an infinite amount. In our case, just 300 cells. It is arranged in a loop, so if we reach the end, we just end up at the beginning again.
     </p>
-    <h3>Each cell</h3>
-    <p>holds just one byte in our case, that is values from 0 to 255. The cells themselves behave in a similar way: if we reach 255 and try to add 1, we just end up at 0. Subtracting 1 works the same way, wrapping from 0 to 255.
+    </section>
+
+    <section>
+    <h3 class="bunch">Each cell</h3>
+    <p class="bunch">holds just one byte in our case, that is values from 0 to 255. The cells themselves behave in a similar way: if we reach 255 and try to add 1, we just end up at 0. Subtracting 1 works the same way, wrapping from 0 to 255.
     </p>
-    <h3>The pointer</h3>
-    <p>
+    </section>
+
+    <section>
+    <h3 class="bunch">The pointer</h3>
+    <p class="bunch">
     points to a single cell on the tape. It's the only way the program has for interacting with the tape: It can only read or modify the cell the pointer is pointing to. The pointer can also be moved around to the left or right, one cell at a time.
     </p>
-    <h3>The set of instructions</h3>
-    <p>
-    is pretty minimal, there are just 8 different instructions, each one of them one character long.
+    </section>
+
+    <section>
+    <h3 class="bunch">The instructions</h3>
+    <p class="bunch">
+    are pretty minimal, there are just 8 different instructions, each one of them one character long.
     <table>
         <thead>
             <tr>
@@ -83,6 +99,8 @@
         </tbody>
     </table>
     </p>
+    </section>
+
     <h2>Limitations and fuckery</h2>
     <p>
     There are a few shortcuts and creative freedoms we're taking. They do not impact the turing completenes of the brainfuck interpreter. Here's a list:

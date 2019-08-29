@@ -146,3 +146,12 @@ body {
     padding: 1em;
 
 }
+
+#explanation section .bunch {
+    display: inline;
+}
+
+#explanation section {
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
