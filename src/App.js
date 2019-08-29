@@ -65,7 +65,7 @@ class Machine extends Component {
             }
         )
     }
-    
+
     random() {
         const wasRunning = this.state.running;
         this.reset()
@@ -191,7 +191,10 @@ class Machine extends Component {
                     <div className="controls">
                         <div className="buttons">
                           <RoundButton
-                            onClick={() => this.random()}
+                            onClick={() => {
+                              this.random();
+                              this.run();
+                            }}
                             icon={faRandom}
                             title="generate new random sample">
                               <span>New</span>
