@@ -1,11 +1,10 @@
 html, body, #root {
-    height: 100%;
-    width: 100%;
     margin: 0;
 }
 
 body {
-    background-color: #404356;
+    background-color: #424242;
+    font-family: sans;
 }
 
 .machine {
@@ -52,6 +51,12 @@ body {
 .slider label {
     color: #eeeeee;
     flex: 1;
+    min-width: 5.5em;
+    font-size: 2em;
+}
+
+.slider label #speed {
+    font-size: 1.1em;
 }
 
 .slider input {
@@ -59,36 +64,51 @@ body {
 }
 
 .buttons button {
-    color: #000;
-    background-color: #1f7a8c;
-    border-radius: 100%;
+    color: #fff;
+    background-color: #33691e;
+    border-radius: 2em;
     border: 2px solid #022b3a;
-    width: 4em;
-    height: 4em;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    font-size: 2em;
+}
+
+.buttons button>span {
+    padding-right: 0.5em;
+    font-weight: 600;
+}
+
+.buttonIconBox {
+    width: 2em;
+    height: 2em;
     display: flex;
     justify-content: center;
     align-items: center;
-
 }
 
 .buttons button:hover {
-    background-color: #238ba0;
+    background-color: #428427;
 }
 
 .buttons button:active {
-    background-color: #1c7182;
+    background-color: #2a531a;
+}
+
+.buttons button:disabled {
+    background-color: #9d9d9d;
 }
 
 .sourceBox,
 .inputBox {
     flex: 1;
     margin: 0px;
-    background-color: #7b80a0;
+    background-color: #bcbcbc;
     padding: 10px;
 }
 
 .sourceBox, .inputBox textarea {
-    background-color: #7b80a0;
+    background-color: #bcbcbc;
     color: #111111;
     font-family: monospace;
     font-size: 28px;
@@ -122,6 +142,86 @@ body {
 .pointer {
     background-color: lightgray;
 }
+
+#explanation {
+    max-width: 65em;
+    margin: auto;
+    background-color: #eeeeee;
+    padding: 1em;
+    border-radius: 1em;
+}
+
+#explanation code {
+    background-color: #bcbcbc;
+    padding: 0.2em;
+    border-radius: 0.2em;
+}
+
+#explanation section .bunch {
+    display: inline;
+}
+
+#explanation section {
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+#explanation a {
+    color: #33691e;
+}
+
+#explanation a:hover {
+    color: #428427;
+}
+
+#explanation a:active {
+    color: #2a531a;
+}
+
+footer {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    width: 100%;
+}
+
+footer p {
+    color: #eeeeee;
+    width: max-content;
+    margin: auto;
+}
+
+a {
+    color: #b2ff59;
+}
+
+a:hover {
+    color: #c8ff89;
+}
+
+a:active {
+    color: #83bd3f;
+}
+
+
+table {
+  border-collapse: collapse;
+  margin: 1em;
+}
+
+thead {
+  border-bottom: 0.15em #bcbcbc solid;
+  background-color: #b2ff59;
+  text-align: left;
+}
+
+th, td {
+  padding: 0.2em;
+}
+
+tr td:first-child {
+  text-align: center;
+}
+
 
 
 /*# sourceMappingURL=/src.e31bb0bc.css.map */
