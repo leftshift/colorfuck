@@ -3,7 +3,7 @@ html, body, #root {
 }
 
 body {
-    background-color: #404356;
+    background-color: #424242;
     font-family: sans;
 }
 
@@ -64,8 +64,8 @@ body {
 }
 
 .buttons button {
-    color: #000;
-    background-color: #1f7a8c;
+    color: #fff;
+    background-color: #33691e;
     border-radius: 2em;
     border: 2px solid #022b3a;
     padding: 0;
@@ -88,11 +88,11 @@ body {
 }
 
 .buttons button:hover {
-    background-color: #238ba0;
+    background-color: #428427;
 }
 
 .buttons button:active {
-    background-color: #1c7182;
+    background-color: #2a531a;
 }
 
 .buttons button:disabled {
@@ -103,12 +103,12 @@ body {
 .inputBox {
     flex: 1;
     margin: 0px;
-    background-color: #7b80a0;
+    background-color: #bcbcbc;
     padding: 10px;
 }
 
 .sourceBox, .inputBox textarea {
-    background-color: #7b80a0;
+    background-color: #bcbcbc;
     color: #111111;
     font-family: monospace;
     font-size: 28px;
@@ -146,13 +146,13 @@ body {
 #explanation {
     max-width: 65em;
     margin: auto;
-    background-color: #d9dbe8;
+    background-color: #eeeeee;
     padding: 1em;
     border-radius: 1em;
 }
 
 #explanation code {
-    background-color: #7b80a0;
+    background-color: #bcbcbc;
     padding-left: 0.2em;
     padding-right: 0.2em;
     border-radius: 0.2em;
@@ -165,6 +165,18 @@ body {
 #explanation section {
     margin-top: 16px;
     margin-bottom: 16px;
+}
+
+#explanation a {
+    color: #33691e;
+}
+
+#explanation a:hover {
+    color: #428427;
+}
+
+#explanation a:active {
+    color: #2a531a;
 }
 
 footer {
@@ -180,13 +192,13 @@ footer p {
 }
 
 a {
-    color: #238ba0;
+    color: #b2ff59;
 }
 
 a:hover {
-    color: #1f7a8c;
+    color: #c8ff89;
 }
 
 a:active {
-    color: #1c7182;
+    color: #83bd3f;
 }
