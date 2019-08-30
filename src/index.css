@@ -146,9 +146,16 @@ body {
 #explanation {
     max-width: 65em;
     margin: auto;
-    background-color: #7b80a0;
+    background-color: #d9dbe8;
     padding: 1em;
+    border-radius: 1em;
+}
 
+#explanation code {
+    background-color: #7b80a0;
+    padding-left: 0.2em;
+    padding-right: 0.2em;
+    border-radius: 0.2em;
 }
 
 #explanation section .bunch {
