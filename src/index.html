@@ -27,7 +27,7 @@
     <section>
     <h3 class="bunch">On the right</h3>
     <p class="bunch">
-    we see our program. The language we use is brainfuck, a rather esoteric language that isn't really used to build applications but <a>has some useful properties</a>. When pressing the shuffle button, a new program is generated. When the program is running, a box shows which instruction is currently executed. Each character on its own is a <a>separate instruction</a>.
+    we see our program. The language we use is brainfuck, a rather esoteric language that isn't really used to build applications but <a href="#why">has some useful properties</a>. When pressing the shuffle button, a new program is generated. When the program is running, a box shows which instruction is currently executed. Each character on its own is a <a href="#instructions">separate instruction</a>.
     </p>
     </section>
 
@@ -53,7 +53,7 @@
     </section>
 
     <section>
-    <h3 class="bunch">The instructions</h3>
+    <h3 class="bunch" id="instructions">The instructions</h3>
     <p class="bunch">
     are pretty minimal, there are just 8 different instructions, each one of them one character long.
     <table>
@@ -100,6 +100,11 @@
     </table>
     </p>
     </section>
+
+    <h2 id="why">Why not x?</h2>
+    <p>
+    It would be possible to do a similar thing with other programming languages. In fact, feel free to fork this and try around! I chose brainfuck for a few reasons: It's quite simple to build an interpreter, generating valid programs is rather simple and with all this, it's still turing complete.
+    </p>
 
     <h2>Limitations and fuckery</h2>
     <p>
