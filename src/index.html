@@ -11,7 +11,7 @@
     <h1>Colorfuck</h1>
     <h2>What is this?</h2>
     <p>
-        We randomly generate computer programs, run them, and see what they do. On the left, you see a visualisation of the memory the program is running in, on the right, you see the code that makes up the program.
+        It randomly generates computer programs, runs them, and you can see what they do. On the left is a visualisation of the memory the program is running in, on the right, you see the code that makes up the program.
     </p>
 
     <section>
@@ -41,14 +41,14 @@
 
     <section>
     <h3 class="bunch">Each cell</h3>
-    <p class="bunch">holds just one byte in our case, that is values from 0 to 255. The cells themselves behave in a similar way: if we reach 255 and try to add 1, we just end up at 0. Subtracting 1 works the same way, wrapping from 0 to 255.
+    <p class="bunch">holds just one byte in our case, that is a value from 0 to 255. The cells themselves behave in a similar way to the tape: if we reach 255 and try to add 1, we just end up at 0. Subtracting 1 works the same way, wrapping from 0 to 255.
     </p>
     </section>
 
     <section>
     <h3 class="bunch">The pointer</h3>
     <p class="bunch">
-    points to a single cell on the tape. It's the only way the program has for interacting with the tape: It can only read or modify the cell the pointer is pointing to. The pointer can also be moved around to the left or right, one cell at a time.
+    points to a single cell on the tape. It's the only way for the program to interact with the tape: It can only read or modify the cell that is pointed to. The pointer can be moved around to the left or right, one cell at a time.
     </p>
     </section>
 
@@ -59,41 +59,41 @@
     <table>
         <thead>
             <tr>
-                <td>Instruction</td>
-                <td>Explanation</td>
+                <th>Instruction</th>
+                <th>Explanation</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>+</td>
+                <td><code>+</code></td>
                 <td>Add 1 to the value of the current cell</td>
             </tr>
             <tr>
-                <td>-</td>
+                <td><code>-</code></td>
                 <td>Subtract 1 from the value of the current cell</td>
             </tr>
             <tr>
-                <td>&lt;</td>
-                <td>Move one cell to the left</td>
+                <td><code>&lt;</code></td>
+                <td>Move the pointer one cell to the left</td>
             </tr>
             <tr>
-                <td>&gt;</td>
-                <td>Move one cell to the right</td>
+                <td><code>&gt;</code></td>
+                <td>Move the pointer one cell to the right</td>
             </tr>
             <tr>
-                <td>[</td>
+                <td><code>[</code></td>
                 <td>If the value of the current cell is <code>0</code>, jump to the corresponding <code>]</code>. If the value is not <code>0</code>, continue.</td>
             </tr>
             <tr>
-                <td>]</td>
-                <td>If the calue of the current cell is <code>0</code>, continue. If the value is not <code>0</code>, jump back to the corresponding <code>[</code></td>
+                <td><code>]</code></td>
+                <td>If the value of the current cell is <code>0</code>, continue. If the value is not <code>0</code>, jump back to the corresponding <code>[</code></td>
             </tr>
             <tr>
-                <td>.</td>
+                <td><code>.</code></td>
                 <td>Print the value of the current cell as an ascii character. Not implemented in colorfuck.</td>
             </tr>
             <tr>
-                <td>,</td>
+                <td><code>,</code></td>
                 <td>Read a value from the input and place its ascii value into the current cell. Not implemented in colorfuck.</td>
             </tr>
         </tbody>
