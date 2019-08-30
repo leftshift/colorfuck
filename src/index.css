@@ -202,3 +202,24 @@ a:hover {
 a:active {
     color: #83bd3f;
 }
+
+
+table {
+  border-collapse: collapse;
+  margin: 1em;
+}
+
+thead {
+  border-bottom: 0.15em #bcbcbc solid;
+  background-color: #b2ff59;
+  text-align: left;
+}
+
+th, td {
+  padding: 0.2em;
+}
+
+tr td:first-child {
+  text-align: center;
+}
+
