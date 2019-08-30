@@ -166,3 +166,27 @@ body {
     margin-top: 16px;
     margin-bottom: 16px;
 }
+
+footer {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    width: 100%;
+}
+
+footer p {
+    color: #eeeeee;
+    width: max-content;
+    margin: auto;
+}
+
+a {
+    color: #238ba0;
+}
+
+a:hover {
+    color: #1f7a8c;
+}
+
+a:active {
+    color: #1c7182;
+}
