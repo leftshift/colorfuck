@@ -336,16 +336,6 @@ class Bitmap extends Component {
         // var pixels = Array(Math.floor(mem.length / 3))
         const pixels = mem.map((v, i, l) => i % 3 == 0 ? <Pixel key={i} r={v} g={l[i+1]} b={l[i+2]} /> : null).filter(v => v);
 
-//        for (var i=0; i<mem.length; i = i+3) {
-//            pixels.push(
-//                <Pixel
-//                key={i}
-//                r={mem[i]}
-//                g={mem[i+1]}
-//                b={mem[i+2]}
-//                />
-//            )
-//        }
         return (
             <div className="bitmap">
             {pixels}
