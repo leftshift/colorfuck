@@ -41829,7 +41829,9 @@ function (_Component2) {
         className: "split"
       }, _react.default.createElement(Bitmap, {
         memory: this.state.memory
-      })), _react.default.createElement("div", {
+      }), _react.default.createElement("div", {
+        id: "warning"
+      }, "Warning: May produce flickering images.")), _react.default.createElement("div", {
         className: "split"
       }, _react.default.createElement("div", {
         className: "controls"
@@ -42070,17 +42072,7 @@ function (_Component7) {
         }) : null;
       }).filter(function (v) {
         return v;
-      }); //        for (var i=0; i<mem.length; i = i+3) {
-      //            pixels.push(
-      //                <Pixel
-      //                key={i}
-      //                r={mem[i]}
-      //                g={mem[i+1]}
-      //                b={mem[i+2]}
-      //                />
-      //            )
-      //        }
-
+      });
       return _react.default.createElement("div", {
         className: "bitmap"
       }, pixels);
@@ -42164,7 +42156,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43611" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46363" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
