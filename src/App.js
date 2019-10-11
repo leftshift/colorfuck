@@ -29,12 +29,12 @@ class Machine extends Component {
         // However, URLSearchParams honers this convention, so we replace all + with the %-representation of + so they aren't treated as spaces
         const params = window.location.search.replace(/\+/g, "%2B");
         const urlParams = new URLSearchParams(params);
-        const sourceParam = urlParams.get('s');
         this.state = {
-            source: sourceParam || this.constructor._generateRandom(14),
+            source: urlParams.get("s") || this.constructor._generateRandom(14),
             lastPushedSource: "",
+            lastPushedSpeed: "",
             length: 14,
-            speed: 300,
+            speed: Number(urlParams.get("speed")) || 300,
             running: false,
             locked: false,
             memory: machine_state.memory,
@@ -48,7 +48,9 @@ class Machine extends Component {
         window.onpopstate = event => {
             this.setState({
                 source: event.state.source,
-                lastPushedSource: event.state.source
+                lastPushedSource: event.state.source,
+                speed: event.state.speed,
+                lastPushedSpeed: event.state.speed,
             });
             this.reset();
         }
@@ -65,7 +67,7 @@ class Machine extends Component {
 
     handleChange(event) {
         this.setState({source: event.target.value});
-        history.replaceState({source: event.target.value}, 'source', '?s=' + event.target.value);
+        history.replaceState({source: this.state.source, speed: this.state.speed}, 'Colorfuck', '?s=' + this.state.source + "&speed=" + this.state.speed );
     }
 
     _setLength(event) {
@@ -82,7 +84,9 @@ class Machine extends Component {
                 }
             }
         )
+        history.replaceState({source: this.state.source, speed: this.state.speed}, 'Colorfuck', '?s=' + this.state.source + "&speed=" + this.state.speed );
     }
+
 
     random(autostart) {
         const wasRunning = this.state.running;
@@ -135,10 +139,11 @@ class Machine extends Component {
             running: true,
             locked: true
         });
-        if (this.state.lastPushedSource != this.state.source) {
-            history.pushState({source: this.state.source}, 'run', '?s=' + this.state.source);
+        if (this.state.lastPushedSource != this.state.source || this.state.lastPushedSpeed != this.state.speed) {
+            history.pushState({source: this.state.source, speed: this.state.speed}, 'Colorfuck', '?s=' + this.state.source + "&speed=" + this.state.speed);
             this.setState({
                 lastPushedSource: this.state.source,
+		lastPushedSpeed: this.state.speed,
             });
         }
     }
