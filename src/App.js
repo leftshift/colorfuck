@@ -66,8 +66,12 @@ class Machine extends Component {
     }
 
     handleChange(event) {
-        this.setState({source: event.target.value});
-        history.replaceState({source: this.state.source, speed: this.state.speed}, 'Colorfuck', '?s=' + this.state.source + "&speed=" + this.state.speed );
+        this.setState({source: event.target.value}, () => {
+          history.replaceState(
+            {source: this.state.source, speed: this.state.speed},
+            'Colorfuck', '?s=' + this.state.source + "&speed=" + this.state.speed
+          );
+        });
     }
 
     _setLength(event) {
@@ -82,9 +86,12 @@ class Machine extends Component {
                 if (this.state.running) {
                     this.stop(this.run);
                 }
+                history.replaceState(
+                  {source: this.state.source, speed: this.state.speed},
+                  'Colorfuck', '?s=' + this.state.source + "&speed=" + this.state.speed
+                );
             }
         )
-        history.replaceState({source: this.state.source, speed: this.state.speed}, 'Colorfuck', '?s=' + this.state.source + "&speed=" + this.state.speed );
     }
 
 
