@@ -69,7 +69,7 @@ class Machine extends Component {
         this.setState({source: event.target.value}, () => {
           history.replaceState(
             {source: this.state.source, speed: this.state.speed},
-            'Colorfuck', '?s=' + this.state.source + "&speed=" + this.state.speed
+            'Colorfuck', '?speed=' + this.state.speed + "&s=" + this.state.source
           );
         });
     }
@@ -88,7 +88,7 @@ class Machine extends Component {
                 }
                 history.replaceState(
                   {source: this.state.source, speed: this.state.speed},
-                  'Colorfuck', '?s=' + this.state.source + "&speed=" + this.state.speed
+                  'Colorfuck', '?speed=' + this.state.speed + "&s=" + this.state.source
                 );
             }
         )
