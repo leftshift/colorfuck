@@ -41829,9 +41829,7 @@ function (_Component2) {
         className: "split"
       }, _react.default.createElement(Bitmap, {
         memory: this.state.memory
-      }), _react.default.createElement("div", {
-        id: "warning"
-      }, "Warning: May produce flickering images.")), _react.default.createElement("div", {
+      })), _react.default.createElement("div", {
         className: "split"
       }, _react.default.createElement("div", {
         className: "controls"
@@ -42156,7 +42154,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46363" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37451" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

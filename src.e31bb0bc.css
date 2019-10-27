@@ -210,8 +210,10 @@ table {
 
 thead {
   border-bottom: 0.15em #bcbcbc solid;
-  background-color: #b2ff59;
   text-align: left;
+  background-color: #33691e;
+  color: #ffffff;
+  
 }
 
 th, td {
