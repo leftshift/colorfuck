@@ -41615,12 +41615,12 @@ function (_Component2) {
 
     var params = window.location.search.replace(/\+/g, "%2B");
     var urlParams = new URLSearchParams(params);
-    var sourceParam = urlParams.get('s');
     _this.state = {
-      source: sourceParam || _this.constructor._generateRandom(14),
+      source: urlParams.get("s") || _this.constructor._generateRandom(14),
       lastPushedSource: "",
+      lastPushedSpeed: "",
       length: 14,
-      speed: 300,
+      speed: Number(urlParams.get("speed")) || 300,
       running: false,
       locked: false,
       memory: machine_state.memory,
@@ -41641,7 +41641,9 @@ function (_Component2) {
       window.onpopstate = function (event) {
         _this2.setState({
           source: event.state.source,
-          lastPushedSource: event.state.source
+          lastPushedSource: event.state.source,
+          speed: event.state.speed,
+          lastPushedSpeed: event.state.speed
         });
 
         _this2.reset();
@@ -41660,41 +41662,50 @@ function (_Component2) {
   }, {
     key: "handleChange",
     value: function handleChange(event) {
+      var _this3 = this;
+
       this.setState({
         source: event.target.value
+      }, function () {
+        history.replaceState({
+          source: _this3.state.source,
+          speed: _this3.state.speed
+        }, 'Colorfuck', '?speed=' + _this3.state.speed + "&s=" + _this3.state.source);
       });
-      history.replaceState({
-        source: event.target.value
-      }, 'source', '?s=' + event.target.value);
     }
   }, {
     key: "_setLength",
     value: function _setLength(event) {
-      var _this3 = this;
+      var _this4 = this;
 
       this.setState({
         length: event.target.value
       }, function () {
-        return _this3.random(false);
+        return _this4.random(false);
       });
     }
   }, {
     key: "_setSpeed",
     value: function _setSpeed(event) {
-      var _this4 = this;
+      var _this5 = this;
 
       this.setState({
         speed: event.target.value
       }, function () {
-        if (_this4.state.running) {
-          _this4.stop(_this4.run);
+        if (_this5.state.running) {
+          _this5.stop(_this5.run);
         }
+
+        history.replaceState({
+          source: _this5.state.source,
+          speed: _this5.state.speed
+        }, 'Colorfuck', '?speed=' + _this5.state.speed + "&s=" + _this5.state.source);
       });
     }
   }, {
     key: "random",
     value: function random(autostart) {
-      var _this5 = this;
+      var _this6 = this;
 
       var wasRunning = this.state.running;
       this.reset();
@@ -41704,10 +41715,10 @@ function (_Component2) {
       this.setState({
         source: source
       }, function () {
-        _this5.interpreter.source = source;
+        _this6.interpreter.source = source;
 
         if (wasRunning || autostart) {
-          _this5.run();
+          _this6.run();
         }
       });
     }
@@ -41733,11 +41744,11 @@ function (_Component2) {
   }, {
     key: "_setStepInterval",
     value: function _setStepInterval(ms, count) {
-      var _this6 = this;
+      var _this7 = this;
 
       console.debug("setting interval to ".concat(ms, "ms, ").concat(count, " steps"));
       this.interval = setInterval(function () {
-        return _this6._runSteps(count);
+        return _this7._runSteps(count);
       }, ms);
     }
   }, {
@@ -41762,12 +41773,14 @@ function (_Component2) {
         locked: true
       });
 
-      if (this.state.lastPushedSource != this.state.source) {
+      if (this.state.lastPushedSource != this.state.source || this.state.lastPushedSpeed != this.state.speed) {
         history.pushState({
-          source: this.state.source
-        }, 'run', '?s=' + this.state.source);
+          source: this.state.source,
+          speed: this.state.speed
+        }, 'Colorfuck', '?speed=' + this.state.speed + "&s=" + this.state.source);
         this.setState({
-          lastPushedSource: this.state.source
+          lastPushedSource: this.state.source,
+          lastPushedSpeed: this.state.speed
         });
       }
     }
@@ -41805,7 +41818,7 @@ function (_Component2) {
   }, {
     key: "render",
     value: function render() {
-      var _this7 = this;
+      var _this8 = this;
 
       var box;
 
@@ -41818,7 +41831,7 @@ function (_Component2) {
         box = _react.default.createElement(InputBox, {
           source: this.state.source,
           onChange: function onChange(event) {
-            return _this7.handleChange(event);
+            return _this8.handleChange(event);
           }
         });
       }
@@ -41837,32 +41850,32 @@ function (_Component2) {
         className: "buttons"
       }, _react.default.createElement(RoundButton, {
         onClick: function onClick() {
-          return _this7.random(true);
+          return _this8.random(true);
         },
         icon: _freeSolidSvgIcons.faRandom,
         title: "generate new random sample"
       }, _react.default.createElement("span", null, "Go!")), !this.state.running ? _react.default.createElement(RoundButton, {
         onClick: function onClick() {
-          return _this7.run();
+          return _this8.run();
         },
         icon: _freeSolidSvgIcons.faPlay,
         title: "run"
       }) : _react.default.createElement(RoundButton, {
         onClick: function onClick() {
-          return _this7.pause();
+          return _this8.pause();
         },
         icon: _freeSolidSvgIcons.faPause,
         title: "stop"
       }), _react.default.createElement(RoundButton, {
         onClick: function onClick() {
-          return _this7.step();
+          return _this8.step();
         },
         icon: _freeSolidSvgIcons.faStepForward,
         disabled: this.state.running,
         title: "run single step"
       }), _react.default.createElement(RoundButton, {
         onClick: function onClick() {
-          return _this7.reset();
+          return _this8.reset();
         },
         icon: _freeSolidSvgIcons.faStop,
         title: "stop"
@@ -41881,7 +41894,7 @@ function (_Component2) {
         max: "50",
         value: this.state.length,
         onChange: function onChange(event) {
-          return _this7._setLength(event);
+          return _this8._setLength(event);
         }
       })), _react.default.createElement("div", {
         className: "slider"
@@ -41897,7 +41910,7 @@ function (_Component2) {
         max: "1000",
         value: this.state.speed,
         onChange: function onChange(event) {
-          return _this7._setSpeed(event);
+          return _this8._setSpeed(event);
         }
       })))), box));
     }
@@ -41935,15 +41948,15 @@ function (_Component3) {
   _inherits(Slider, _Component3);
 
   function Slider(props) {
-    var _this8;
+    var _this9;
 
     _classCallCheck(this, Slider);
 
-    _this8 = _possibleConstructorReturn(this, _getPrototypeOf(Slider).call(this, props));
-    _this8.state = {
+    _this9 = _possibleConstructorReturn(this, _getPrototypeOf(Slider).call(this, props));
+    _this9.state = {
       value: 10
     };
-    return _this8;
+    return _this9;
   }
 
   _createClass(Slider, [{
@@ -42154,7 +42167,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37451" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35331" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
