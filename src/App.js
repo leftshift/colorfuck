@@ -147,7 +147,10 @@ class Machine extends Component {
             locked: true
         });
         if (this.state.lastPushedSource != this.state.source || this.state.lastPushedSpeed != this.state.speed) {
-            history.pushState({source: this.state.source, speed: this.state.speed}, 'Colorfuck', '?s=' + this.state.source + "&speed=" + this.state.speed);
+            history.pushState(
+              {source: this.state.source, speed: this.state.speed},
+              'Colorfuck', '?speed=' + this.state.speed + "&s=" + this.state.source
+            );
             this.setState({
                 lastPushedSource: this.state.source,
 		lastPushedSpeed: this.state.speed,
