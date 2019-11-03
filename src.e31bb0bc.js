@@ -41824,11 +41824,13 @@ function (_Component2) {
 
       if (this.state.locked) {
         box = _react.default.createElement(SourceBox, {
+          label: "Source Code",
           source: this.state.source,
           pointer: this.state.ins_pointer
         });
       } else {
         box = _react.default.createElement(InputBox, {
+          label: "Source Code",
           source: this.state.source,
           onChange: function onChange(event) {
             return _this8.handleChange(event);
@@ -41884,12 +41886,12 @@ function (_Component2) {
       }, _react.default.createElement("div", {
         className: "slider"
       }, _react.default.createElement("label", {
-        htmlFor: "length"
+        htmlFor: "lengthSlider"
       }, _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
         icon: _freeSolidSvgIcons.faRuler,
         size: "1x"
       }), " Length"), _react.default.createElement(Slider, {
-        id: "length",
+        id: "lengthSlider",
         min: "1",
         max: "50",
         value: this.state.length,
@@ -41899,13 +41901,13 @@ function (_Component2) {
       })), _react.default.createElement("div", {
         className: "slider"
       }, _react.default.createElement("label", {
-        htmlFor: "speed"
+        htmlFor: "speedSlider"
       }, _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
         icon: _freeSolidSvgIcons.faTachometerAlt,
         size: "1x",
         id: "speed"
       }), " Speed"), _react.default.createElement(Slider, {
-        id: "speed",
+        id: "speedSlider",
         min: "1",
         max: "1000",
         value: this.state.speed,
@@ -42024,6 +42026,7 @@ function (_Component5) {
       return _react.default.createElement("div", {
         className: "inputBox"
       }, _react.default.createElement("textarea", {
+        "aria-label": this.props.label,
         onChange: this.props.onChange,
         value: this.props.source
       }));
@@ -42048,7 +42051,8 @@ function (_Component6) {
     key: "render",
     value: function render() {
       return _react.default.createElement("div", {
-        className: "sourceBox"
+        className: "sourceBox",
+        "aria-label": this.props.label + " (read-only because running)"
       }, _react.default.createElement("pre", null, this.props.source.slice(0, this.props.pointer), _react.default.createElement("span", {
         className: "pointer"
       }, this.props.source[this.props.pointer]), this.props.source.slice(this.props.pointer + 1)));
@@ -42167,7 +42171,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35331" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40583" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

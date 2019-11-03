@@ -48,7 +48,7 @@ body {
     /* max-width: 500px; */
 }
 
-.slider label {
+label {
     color: #eeeeee;
     flex: 1;
     min-width: 5.5em;
