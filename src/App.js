@@ -29,8 +29,9 @@ class Machine extends Component {
         // However, URLSearchParams honers this convention, so we replace all + with the %-representation of + so they aren't treated as spaces
         const params = window.location.search.replace(/\+/g, "%2B");
         const urlParams = new URLSearchParams(params);
+        const source64 = atob(urlParams.get("s64") || "");
         this.state = {
-            source: urlParams.get("s") || this.constructor._generateRandom(14),
+            source: urlParams.get("s") || source64 || this.constructor._generateRandom(14),
             lastPushedSource: "",
             lastPushedSpeed: "",
             length: 14,
@@ -69,7 +70,7 @@ class Machine extends Component {
         this.setState({source: event.target.value}, () => {
           history.replaceState(
             {source: this.state.source, speed: this.state.speed},
-            'Colorfuck', '?speed=' + this.state.speed + "&s=" + this.state.source
+            'Colorfuck', '?speed=' + this.state.speed + "&s64=" + btoa(this.state.source)
           );
         });
     }
@@ -88,7 +89,7 @@ class Machine extends Component {
                 }
                 history.replaceState(
                   {source: this.state.source, speed: this.state.speed},
-                  'Colorfuck', '?speed=' + this.state.speed + "&s=" + this.state.source
+                  'Colorfuck', '?speed=' + this.state.speed + "&s64=" + btoa(this.state.source)
                 );
             }
         )
@@ -149,7 +150,7 @@ class Machine extends Component {
         if (this.state.lastPushedSource != this.state.source || this.state.lastPushedSpeed != this.state.speed) {
             history.pushState(
               {source: this.state.source, speed: this.state.speed},
-              'Colorfuck', '?speed=' + this.state.speed + "&s=" + this.state.source
+              'Colorfuck', '?speed=' + this.state.speed + "&s64=" + btoa(this.state.source)
             );
             this.setState({
                 lastPushedSource: this.state.source,
