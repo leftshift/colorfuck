@@ -210,11 +210,13 @@ class Machine extends Component {
         let box;
         if (this.state.locked) {
             box = <SourceBox
+                label="Source Code"
                 source={this.state.source}
                 pointer={this.state.ins_pointer}
                 />
         } else {
             box = <InputBox
+                label="Source Code"
                 source={this.state.source}
                 onChange={(event) => this.handleChange(event)}
                 />
@@ -251,9 +253,9 @@ class Machine extends Component {
                         </div>
                         <div className="sliders">
                             <div className="slider">
-                              <label htmlFor="length"><FontAwesomeIcon icon={faRuler} size="1x"/> Length</label>
+                              <label htmlFor="lengthSlider"><FontAwesomeIcon icon={faRuler} size="1x"/> Length</label>
                               <Slider
-                                  id="length"
+                                  id="lengthSlider"
                                   min="1"
                                   max="50"
                                   value={this.state.length}
@@ -261,9 +263,9 @@ class Machine extends Component {
                               />
                             </div>
                             <div className="slider">
-                                <label htmlFor="speed"><FontAwesomeIcon icon={faTachometerAlt} size="1x" id="speed"/> Speed</label>
+                                <label htmlFor="speedSlider"><FontAwesomeIcon icon={faTachometerAlt} size="1x" id="speed"/> Speed</label>
                                 <Slider
-                                    id="speed"
+                                    id="speedSlider"
                                     min="1"
                                     max="1000"
                                     value={this.state.speed}
@@ -320,6 +322,7 @@ class InputBox extends Component {
         return (
             <div className="inputBox">
                 <textarea
+                    aria-label={this.props.label}
                     onChange={this.props.onChange}
                     value={this.props.source}
                 />
@@ -331,7 +334,7 @@ class InputBox extends Component {
 class SourceBox extends Component {
     render() {
         return (
-            <div className="sourceBox">
+            <div className="sourceBox" aria-label={this.props.label + " (read-only because running)"}>
             <pre>
             {this.props.source.slice(0, this.props.pointer)}
             <span className="pointer">
