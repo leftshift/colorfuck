@@ -41615,8 +41615,9 @@ function (_Component2) {
 
     var params = window.location.search.replace(/\+/g, "%2B");
     var urlParams = new URLSearchParams(params);
+    var source64 = atob(urlParams.get("s64") || "");
     _this.state = {
-      source: urlParams.get("s") || _this.constructor._generateRandom(14),
+      source: urlParams.get("s") || source64 || _this.constructor._generateRandom(14),
       lastPushedSource: "",
       lastPushedSpeed: "",
       length: 14,
@@ -41670,7 +41671,7 @@ function (_Component2) {
         history.replaceState({
           source: _this3.state.source,
           speed: _this3.state.speed
-        }, 'Colorfuck', '?speed=' + _this3.state.speed + "&s=" + _this3.state.source);
+        }, 'Colorfuck', '?speed=' + _this3.state.speed + "&s64=" + btoa(_this3.state.source));
       });
     }
   }, {
@@ -41699,7 +41700,7 @@ function (_Component2) {
         history.replaceState({
           source: _this5.state.source,
           speed: _this5.state.speed
-        }, 'Colorfuck', '?speed=' + _this5.state.speed + "&s=" + _this5.state.source);
+        }, 'Colorfuck', '?speed=' + _this5.state.speed + "&s64=" + btoa(_this5.state.source));
       });
     }
   }, {
@@ -41777,7 +41778,7 @@ function (_Component2) {
         history.pushState({
           source: this.state.source,
           speed: this.state.speed
-        }, 'Colorfuck', '?speed=' + this.state.speed + "&s=" + this.state.source);
+        }, 'Colorfuck', '?speed=' + this.state.speed + "&s64=" + btoa(this.state.source));
         this.setState({
           lastPushedSource: this.state.source,
           lastPushedSpeed: this.state.speed
@@ -42171,7 +42172,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40583" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46389" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
