@@ -1,11 +1,13 @@
 # colorfuck
 art(?) through random code
 
+[See it in action!](https://leftshift.github.io/colorfuck)
+
 ## What?
-We generate a random(*) chunk of brainfuck code and run it in an interpreter. The memory the program is run in is interpreted
+We generate a random[1] chunk of brainfuck code and run it in an interpreter. The memory the program is run in is interpreted
 as a bitmap and displayed on the left. Speed and code length can be varied or own code entered.
 
-(*) random in the sense that it has to be a valid brainfuck program, e.g. the `[` and `]` have to be balanced
+[1] random in the sense that it has to be a valid brainfuck program, e.g. the `[` and `]` have to be balanced
 
 ## Implementation notes
 We're doing a few things that are pretty standard but also a few which don't quite match with other brainfuck implementations.
